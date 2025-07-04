@@ -17,6 +17,11 @@ export const routes: Routes = [
       import('./modules/professor/pages/agenda/agenda.component').then(m => m.AgendaComponent),
   },
   {
+    path: 'professor/alunos/novo',
+    loadComponent: () =>
+      import('./modules/professor/pages/aluno-form/aluno-form.component').then(m => m.AlunoFormComponent),
+  },
+  {
     path: '',
     redirectTo: 'professor/alunos',
     pathMatch: 'full'

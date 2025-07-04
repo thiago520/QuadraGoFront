@@ -1,0 +1,23 @@
+<form [formGroup]="form" (ngSubmit)="salvar()" class="formulario">
+  <mat-form-field appearance="outline">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="nome" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Telefone</mat-label>
+    <input matInput formControlName="telefone" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Email</mat-label>
+    <input matInput formControlName="email" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Plano</mat-label>
+    <input matInput formControlName="plano" />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>
