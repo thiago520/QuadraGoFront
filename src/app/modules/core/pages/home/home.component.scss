@@ -1,0 +1,207 @@
+.welcome-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #f5f5f5;
+  background-image: url("/assets/imagens/BannerQuadraGo.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .welcome-description {
+    font-size: 1.1rem;
+    color: #14b536;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+
+  .welcome-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
+.features-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 40px 20px;
+  background-color: #fff;
+  text-align: center;
+
+  .feature-card {
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    mat-icon {
+      font-size: 2rem;
+      color: #1976d2;
+      margin-bottom: 10px;
+      display: inline-flex; // Garante alinhamento correto
+      align-items: center;
+      justify-content: center;
+      height: 2.5rem; // Garante altura suficiente
+      width: 2.5rem; // Garante largura suficiente
+      overflow: visible; // Evita corte do ícone
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+  }
+}
+
+.tab-icon {
+  padding: 0.5rem;
+}
+
+.call-to-action-section {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #e0e0e0;
+
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  .call-to-action-description {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto 20px;
+  }
+}
+
+button[mat-stroked-button],
+[mat-raised-button] {
+  transition: all 0.3s ease;
+
+  &:hover {
+    background-color: #14b536;
+    color: white;
+    border-color: #14b536;
+  }
+}
+
+// Media Queries para Responsividade
+@media (max-width: 768px) {
+  .welcome-section {
+    padding: 40px 10px;
+    background-image: url("/assets/imagens/BannerQuadraGoMobile.png"); // Banner para mobile
+
+    h1 {
+      font-size: 1.8rem;
+    }
+
+    .welcome-description {
+      font-size: 1rem;
+    }
+
+    .welcome-buttons {
+      flex-direction: column;
+      gap: 15px;
+
+      button {
+        width: 100%;
+        max-width: 200px;
+        margin: 0 auto;
+      }
+    }
+  }
+
+  .features-section {
+    padding: 20px 10px;
+    grid-template-columns: 1fr; // Um card por linha em mobile
+
+    .feature-card {
+      padding: 15px;
+
+      mat-icon {
+        font-size: 1.5rem;
+      }
+
+      h3 {
+        font-size: 1rem;
+      }
+
+      p {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .call-to-action-section {
+    padding: 20px 10px;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    .call-to-action-description {
+      font-size: 1rem;
+    }
+
+    button {
+      width: 100%;
+      max-width: 200px;
+    }
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .welcome-section {
+    padding: 50px 15px;
+
+    h1 {
+      font-size: 2.2rem;
+    }
+
+    .welcome-description {
+      font-size: 1.05rem;
+    }
+  }
+
+  .features-section {
+    padding: 30px 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+    .feature-card {
+      padding: 15px;
+
+      mat-icon {
+        font-size: 1.8rem;
+      }
+
+      h3 {
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .call-to-action-section {
+    padding: 30px 15px;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    .call-to-action-description {
+      font-size: 1.05rem;
+    }
+  }
+}

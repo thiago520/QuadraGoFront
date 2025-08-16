@@ -1,0 +1,167 @@
+.header-toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); // Sombra suave para profundidade
+}
+
+.brand-container {
+  display: flex;
+  align-items: center;
+  gap: 12px; // Espaço entre logo e título
+}
+
+.logo {
+  height: 92px; // Altura ideal para o logo
+  width: auto;
+  object-fit: contain; // Garante que o logo não seja distorcido
+}
+
+.title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #0c2e5b; // Cor para contraste com o fundo primary
+}
+
+.subtitle {
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: #14b536; // Cor mais suave para o subtítulo
+  font-style: oblique;
+}
+
+.spacer {
+  flex: 1 1 auto; // Ocupa o espaço disponível
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-links {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-links.hidden {
+  display: none; // Esconde links em modo mobile quando menu não está aberto
+}
+
+.menu-button {
+  display: none; // Escondido por padrão, visível apenas em mobile
+}
+
+button[mat-stroked-button] {
+   transition: all 0.3s ease;
+
+   &:hover {
+     background-color: #14b536;
+     color: white;
+     border-color: #14b536;
+   }
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #eee;
+}
+
+
+// Responsividade
+@media (max-width: 768px) {
+  .nav-links {
+    flex-direction: column;
+    position: absolute;
+    top: 64px; // Altura padrão da toolbar
+    left: 0;
+    right: 0;
+    background-color: #3f51b5; // Mesma cor do tema primary (ajuste conforme o tema)
+    padding: 16px;
+    z-index: 1000;
+  }
+
+  .menu-button {
+    display: block; // Visível em mobile
+  }
+
+  .actions {
+    gap: 0;
+  }
+}
+
+
+
+
+
+
+
+/*header {
+//  background: #002a57;
+  //background: hsl(210, 25%, 98%);
+  padding: 1rem;
+  color: hsl(215, 30%, 15%);
+}
+
+mat-toolbar {
+  display: flex;
+  align-items: center;
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    color: #7b899d;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+
+  button[mat-stroked-button] {
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: hsl(25, 95%, 55%);
+      color: white;
+      border-color: hsl(25, 95%, 55%);
+    }
+  }
+}
+
+main {
+  padding: 1rem;
+}
+
+main {
+  padding: 1rem;
+}
+
+footer {
+  text-align: center;
+  padding: 1rem;
+  background: #eee;
+}
+
+.logo {
+  width: 192px;
+  height: 192px;
+}
+*/

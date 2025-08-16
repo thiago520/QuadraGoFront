@@ -1,4 +1,35 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$blue-palette,
+      tertiary: mat.$orange-palette,
+      theme-type: light,
+    ),
+    typography: Roboto,
+    density: 0
+  ));
+}
+
+button[mat-stroked-button], [mat-raised-button], [mat-button] {
+   transition: all 0.3s ease;
+
+   &:hover {
+     background-color: #14b536;
+     color: white;
+     border-color: #14b536;
+   }
+}
+
+
+// ESTILOS GLOBAIS ADICIONAIS
+// -------------------------------------------------
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

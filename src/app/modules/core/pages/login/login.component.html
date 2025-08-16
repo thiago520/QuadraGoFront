@@ -1,0 +1,76 @@
+<div class="login-container">
+  <mat-toolbar color="primary" class="header-toolbar">
+    <div class="brand-container">
+      <span class="title">QuadraGo</span>
+      <span class="subtitle">Gestão Esportiva</span>
+    </div>
+  </mat-toolbar>
+
+  <div class="login-card">
+    <h2>Bem-vindo de volta</h2>
+    <p class="welcome-text">
+      Entre com suas credenciais para acessar sua conta
+    </p>
+
+    <form class="login-form">
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Email</mat-label>
+        <input
+          matInput
+          placeholder="seu@email.com"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input
+          matInput
+          type="password"
+          placeholder="Digite sua senha"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+        <mat-icon matSuffix>visibility</mat-icon>
+      </mat-form-field>
+
+      <div class="options-row">
+        <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe"
+          >Lembrar de mim</mat-checkbox
+        >
+        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+      </div>
+
+      <button
+        mat-raised-button
+        color="primary"
+        class="full-width"
+        [disabled]="!email || !password"
+      >
+        Entrar
+      </button>
+
+      <div class="divider">
+        <span>OU CONTINUE COM</span>
+      </div>
+
+      <div class="social-buttons">
+        <button mat-stroked-button class="social-button google">
+          <mat-icon>google</mat-icon> Google
+        </button>
+        <button mat-stroked-button class="social-button facebook">
+          <mat-icon>facebook</mat-icon> Facebook
+        </button>
+      </div>
+
+      <p class="signup-link">Não tem uma conta? <a href="#">Crie conta</a></p>
+      <!-- Novo botão Voltar ao Início -->
+      <button mat-button routerLink="/" class="back-button">
+        ← Voltar ao Início
+      </button>
+    </form>
+  </div>
+</div>

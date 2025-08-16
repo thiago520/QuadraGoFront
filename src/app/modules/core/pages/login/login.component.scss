@@ -1,0 +1,185 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  font-family: 'Roboto', sans-serif;
+}
+
+.header-toolbar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+
+.brand-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: white;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.login-card {
+  background: white;
+  padding: 40px;
+  margin-top: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.welcome-text {
+  color: #666;
+  margin-bottom: 20px;
+  font-size: 0.9rem;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.options-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-size: 0.8rem;
+
+  .forgot-password {
+    color: #1976d2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 20px 0;
+
+  span {
+    background: white;
+    padding: 0 10px;
+    position: relative;
+    z-index: 1;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #ddd;
+    z-index: 0;
+  }
+}
+
+.social-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.social-button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  max-width: 180px;
+}
+
+.google {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.facebook {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.signup-link {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 20px;
+
+  a {
+    color: #1976d2;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.back-button {
+  margin-top: 20px;
+  color: #666;
+  text-align: left;
+}
+
+// Media Queries para Responsividade
+@media (max-width: 768px) {
+  .login-card {
+    padding: 20px;
+    margin-top: 10px;
+    max-width: 90%;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+
+  .welcome-text {
+    font-size: 0.85rem;
+  }
+
+  .options-row {
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .social-buttons {
+    flex-direction: column;
+
+    .social-button {
+      max-width: 100%;
+    }
+  }
+
+  .back-button {
+    margin-top: 15px;
+  }
+}

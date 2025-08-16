@@ -1,0 +1,91 @@
+<section class="welcome-section">
+  <h1>Gerencie suas quadras com facilidade</h1>
+  <p class="welcome-description">
+    Sistema completo para professores e gestores de quadras esportivas. Organize
+    alunos, aulas e assinaturas em uma única plataforma.
+  </p>
+  <div class="welcome-buttons">
+    <button mat-raised-button color="primary" routerLink="/dashboard">
+      Começar Agora
+    </button>
+    <button mat-stroked-button routerLink="/about">Saiba Mais</button>
+  </div>
+</section>
+
+<mat-tab-group class="tab-group">
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">sports_soccer</mat-icon>
+      Para Gestão da Quadra
+    </ng-template>
+
+    <section class="features-section">
+      <div class="feature-card">
+        <mat-icon>event</mat-icon>
+        <h3>Agendamento de Quadras</h3>
+        <p>
+          Controle reservas de forma rápida, evitando conflitos de horários.
+        </p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>access_time</mat-icon>
+        <h3>Sistema de Day Use</h3>
+        <p>Gerencie acessos, valores e controle de uso diário de clientes.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>restaurant</mat-icon>
+        <h3>Gestão de Bar e Restaurante</h3>
+        <p>Controle estoque, pedidos e vendas de forma integrada.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>analytics</mat-icon>
+        <h3>Relatórios Financeiros</h3>
+        <p>Acompanhe receitas, despesas e resultados com relatórios claros.</p>
+      </div>
+    </section>
+  </mat-tab>
+
+  <mat-tab>
+    <ng-template mat-tab-label>
+      <mat-icon class="tab-icon">school</mat-icon>
+      Para Professores
+    </ng-template>
+
+    <section class="features-section">
+      <div class="feature-card">
+        <mat-icon>group</mat-icon>
+        <h3>Gestão de Alunos</h3>
+        <p>Cadastre e organize todos os seus alunos em um só lugar.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>calendar_month</mat-icon>
+        <h3>Agendamento</h3>
+        <p>Controle horários e aulas de forma prática e eficiente.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>show_chart</mat-icon>
+        <h3>Métricas</h3>
+        <p>Acompanhe desempenho dos seus alunos e de suas turmas.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>credit_card</mat-icon>
+        <h3>Planos de Assinatura</h3>
+        <p>
+          Crie planos de assinatura para seus alunos e automatize as cobranças,
+          garantindo mais comodidade e segurança no recebimento.
+        </p>
+      </div>
+    </section>
+  </mat-tab>
+</mat-tab-group>
+
+<section class="call-to-action-section">
+  <h2>Pronto para começar?</h2>
+  <p class="call-to-action-description">
+    Junte-se a centenas de professores que já usam o QuadraGo para gerenciar
+    suas quadras.
+  </p>
+  <button mat-raised-button color="primary" routerLink="/dashboard">
+    Acessar Plataforma
+  </button>
+</section>
