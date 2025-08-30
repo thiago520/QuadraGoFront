@@ -66,19 +66,10 @@ h2 {
 
 .options-row {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 15px;
   font-size: 0.8rem;
-
-  .forgot-password {
-    color: #1976d2;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
 }
 
 .divider {
@@ -104,38 +95,15 @@ h2 {
   }
 }
 
-.social-buttons {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-}
-
-.social-button {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  width: 100%;
-  max-width: 180px;
-}
-
-.google {
-  background-color: #fff;
-  border-color: #ddd;
-}
-
-.facebook {
-  background-color: #fff;
-  border-color: #ddd;
-}
-
 .signup-link {
   font-size: 0.8rem;
   color: #666;
   margin-top: 20px;
 
-  a {
+  .login-link {
     color: #1976d2;
     text-decoration: none;
+    cursor: pointer; // Adicionado para mudar o ponteiro do mouse
 
     &:hover {
       text-decoration: underline;
@@ -145,7 +113,11 @@ h2 {
 
 .back-button {
   margin-top: 20px;
+  color: #666;
   text-align: left;
+  width: 100%; // Mesma largura do botão "Criar Conta"
+  padding: 10px; // Mesma altura aproximada do botão "Criar Conta"
+  border: none;
 
   &:hover {
     color: white;
@@ -172,14 +144,6 @@ h2 {
     flex-direction: column;
     gap: 10px;
     text-align: left;
-  }
-
-  .social-buttons {
-    flex-direction: column;
-
-    .social-button {
-      max-width: 100%;
-    }
   }
 
   .back-button {
