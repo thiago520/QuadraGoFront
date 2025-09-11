@@ -31,17 +31,22 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./modules/core/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
+          import('./modules/teacher/pages/dashboard/dashboard.component').then(m => m.DashboardComponent)
       },
       {
-        path: 'alunos',
+        path: 'students',
         loadComponent: () =>
-          import('./modules/professor/pages/alunos/alunos.component').then(m => m.AlunosComponent)
+          import('./modules/teacher/pages/students/students.component').then(m => m.StudentsComponent)
+      },
+      {
+        path: 'students/new',
+        loadComponent: () =>
+          import('./modules/teacher/pages/studentNew/studentNew.component').then(m => m.StudentNewComponent)
       },
       {
         path: 'agenda',
         loadComponent: () =>
-          import('./modules/professor/pages/agenda/agenda.component').then(m => m.AgendaComponent)
+          import('./modules/teacher/pages/agenda/agenda.component').then(m => m.AgendaComponent)
       }
     ]
   }

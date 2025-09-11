@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AlunoFormComponent } from './aluno-form.component';
+import { AlunoFormComponent } from './studentNew.component';
 
 describe('AlunoFormComponent', () => {
   let component: AlunoFormComponent;

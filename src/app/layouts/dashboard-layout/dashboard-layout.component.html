@@ -1,13 +1,20 @@
-<aside>
-  <nav>
-    <ul>
-      <li><a routerLink="/dashboard">Dashboard</a></li>
-      <li><a routerLink="/alunos">Alunos</a></li>
-      <li><a routerLink="/professor/agenda">Agenda</a></li>
-    </ul>
-  </nav>
-</aside>
+<mat-toolbar color="primary" class="dashboard-header">
+  <div class="header-content">
+    <div class="title-container">
+      <span class="title">QuadraGo</span>
+      <span class="separator">|</span>
+      <span class="subtitle">Painel do Professor</span>
+    </div>
+    <div class="button-container">
+      <button mat-button class="main-button" routerLink="/dashboard">Painel</button>
+      <button mat-button class="main-button" routerLink="/dashboard/students">Alunos</button>
+      <button mat-button (click)="logout()" class="main-button">Sair</button>
+    </div>
+  </div>
+</mat-toolbar>
 
-<section class="content">
-  <router-outlet></router-outlet>
-</section>
+<div class="main">
+  <main class="dashboard-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

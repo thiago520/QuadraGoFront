@@ -1,0 +1,165 @@
+<div class="students-page">
+  <!-- Header + CTA -->
+  <div class="page-header">
+    <div>
+      <h1>Meus Alunos</h1>
+      <p class="subtitle">Gerencie todos os seus alunos cadastrados</p>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="new-student-btn"
+      routerLink="/dashboard/students/new"
+    >
+      <mat-icon>add</mat-icon>
+      Novo Aluno
+    </button>
+  </div>
+
+  <!-- Métricas -->
+  <section class="metrics">
+    <mat-card class="metric-card">
+      <div class="metric-row">
+        <div class="metric-icon">
+          <mat-icon>groups</mat-icon>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ totals.total }}</div>
+          <div class="metric-label">Total de Alunos</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <div class="metric-row">
+        <div class="metric-icon success">
+          <mat-icon>group</mat-icon>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ totals.active }}</div>
+          <div class="metric-label">Alunos Ativos</div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card class="metric-card">
+      <div class="metric-row">
+        <div class="metric-icon warn">
+          <mat-icon>event</mat-icon>
+        </div>
+        <div class="metric-info">
+          <div class="metric-value">{{ totals.lessonsThisWeek }}</div>
+          <div class="metric-label">Aulas Esta Semana</div>
+        </div>
+      </div>
+    </mat-card>
+  </section>
+
+  <!-- Card: Buscar Alunos -->
+  <mat-card class="search-card">
+    <div class="search-header">
+      <div class="title-with-icon">
+        <mat-icon>search</mat-icon>
+        <h2>Buscar Alunos</h2>
+      </div>
+      <small class="hint">Digite o nome do aluno para filtrar a lista</small>
+    </div>
+
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input
+        matInput
+        placeholder="Buscar por nome..."
+        [(ngModel)]="query"
+        (ngModelChange)="onSearchChange($event)"
+      />
+      <button
+        matSuffix
+        mat-icon-button
+        *ngIf="query"
+        aria-label="Limpar"
+        (click)="clearSearch()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-card>
+
+  <!-- Card: Lista de Alunos -->
+  <mat-card class="list-card">
+    <div class="list-header">
+      <div class="title-with-icon">
+        <mat-icon>groups</mat-icon>
+        <h2>Lista de Alunos</h2>
+      </div>
+
+      <div class="results">
+        {{ filtered.length }} aluno(s) encontrado(s)
+      </div>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="students-table">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>
+              <mat-icon class="th-icon">phone</mat-icon>Telefone
+            </th>
+            <th>
+              <mat-icon class="th-icon">calendar_month</mat-icon>Data Nascimento
+            </th>
+            <th>Status</th>
+            <th class="actions-col">Ações</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let s of filtered">
+            <td class="name-cell">{{ s.name }}</td>
+            <td>{{ s.phone }}</td>
+            <td>
+              {{ s.birthDate | date : "dd/MM/yyyy" }}
+              <span class="age">({{ getAge(s.birthDate) }} anos)</span>
+            </td>
+            <td>
+              <span
+                class="status-pill"
+                [class.active]="s.status === 'Ativo'"
+                [class.inactive]="s.status !== 'Ativo'"
+              >
+                {{ s.status }}
+              </span>
+            </td>
+            <td class="actions">
+              <button
+                mat-icon-button
+                color="primary"
+                [routerLink]="['/dashboard/students', s.id, 'editar']"
+                matTooltip="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button
+                mat-icon-button
+                color="warn"
+                (click)="onDelete(s)"
+                matTooltip="Excluir"
+              >
+                <mat-icon class="icon-del">delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+
+          <tr *ngIf="!filtered.length">
+            <td colspan="5" class="empty-state">
+              <mat-icon>info</mat-icon>
+              Nenhum aluno encontrado para o filtro atual.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </mat-card>
+</div>

@@ -1,0 +1,309 @@
+.dashboard-body {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.dashboard-title {
+  text-align: start;
+
+  h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #333;
+  }
+
+  .paragraph-title {
+    font-size: 0.9rem;
+    color: gray;
+    margin: 0;
+  }
+}
+
+/* ==== Top Cards ==== */
+.top-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.top-card {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  position: relative;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.top-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 24px;
+
+  &.icon-group {
+    color: #1976d2;
+  }
+  &.icon-calendar {
+    color: #4caf50;
+  }
+  &.icon-emoji_events {
+    color: #ff9800;
+  }
+}
+
+/* ==== Bottom Cards ==== */
+.bottom-cards {
+  display: flex;
+  gap: 20px;
+}
+
+.bottom-card {
+  flex: 1;
+  background-color: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  transition: box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+mat-card-header {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.title-card-top {
+  color: #666;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.card-content {
+  padding: 16px;
+  text-align: left;
+}
+
+.content-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1976d2;
+  margin: 0 0 5px 0;
+}
+
+.content-text {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+}
+
+.header-icon {
+  font-size: 24px;
+  margin-right: 10px;
+  color: #666;
+}
+
+.card-actions {
+  padding: 0 16px 16px 16px;
+}
+
+/* ==== Ações Rápidas (mesmo padrão do Atividades Recentes) ==== */
+.quick-card {
+  border: 1px solid #e8eef5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.quick-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.quick-icon {
+  font-size: 28px;
+  color: #1976d2; /* azul para diferenciar do verde do outro card */
+}
+
+.quick-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.quick-subtitle {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+/* ==== Botões das Ações Rápidas ==== */
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.action-button {
+  width: 100%;
+  justify-content: flex-start;
+  text-transform: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-size: 1rem;
+  margin-top: 12px;
+
+  mat-icon {
+    margin-right: 8px;
+  }
+
+  &:first-child {
+    background-color: #1976d2;
+    color: #fff;
+
+    &:hover {
+      background-color: #1565c0;
+    }
+  }
+
+  &:not(:first-child) {
+    background-color: #f9f9f9;
+    color: #000;
+    border: 1px solid #e0e0e0;
+
+    &:hover {
+      background-color: #fb8730;
+      color: #fff;
+    }
+  }
+}
+
+/* ==== Atividades Recentes ==== */
+.recent-card {
+  border: 1px solid #e8eef5;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.recent-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.recent-icon {
+  font-size: 28px;
+  color: #16a34a;
+}
+
+.recent-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #0f172a;
+}
+
+.recent-subtitle {
+  margin: 2px 0 0;
+  font-size: 0.95rem;
+  color: #6b7280;
+}
+
+.activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.activity-item {
+  --dot: #16a34a;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #f6f8fb;
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+.activity-item .bullet {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--dot);
+  flex: 0 0 10px;
+}
+
+.activity-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.activity-text .name {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.activity-text .desc {
+  font-size: 0.95rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-item .time {
+  margin-left: auto;
+  font-size: 0.95rem;
+  color: #6b7280;
+  white-space: nowrap;
+}
+
+/* ==== Responsividade ==== */
+@media (max-width: 768px) {
+  .top-cards,
+  .bottom-cards {
+    flex-direction: column;
+    gap: 15px;
+  }
+  .top-card,
+  .bottom-card {
+    width: 100%;
+  }
+
+  .quick-card,
+  .recent-card {
+    padding: 16px;
+  }
+  .quick-title,
+  .recent-title {
+    font-size: 1.5rem;
+  }
+  .activity-item {
+    padding: 12px 14px;
+  }
+  .quick-subtitle,
+  .recent-subtitle,
+  .activity-item .time {
+    font-size: 0.9rem;
+  }
+}

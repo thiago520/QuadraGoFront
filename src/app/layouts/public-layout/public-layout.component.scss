@@ -26,6 +26,10 @@
   font-size: 2rem;
   font-weight: 600;
   color: #0c2e5b; // Cor para contraste com o fundo primary
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .subtitle {

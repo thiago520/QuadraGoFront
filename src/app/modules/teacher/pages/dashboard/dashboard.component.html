@@ -1,0 +1,105 @@
+<div class="dashboard-body">
+  <div class="dashboard-title">
+    <h1>Bem-vindo de volta, Professor!</h1>
+    <p class="paragraph-title">
+      Aqui está um resumo das suas atividades e estatísticas.
+    </p>
+  </div>
+
+  <!-- Cards superiores -->
+  <div class="top-cards">
+    <mat-card class="top-card">
+      <mat-card-header>
+        <mat-card-title class="title-card-top">Alunos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <p class="content-number">147</p>
+        <p class="content-text">Alunos inscritos</p>
+      </mat-card-content>
+      <mat-icon class="top-icon icon-group">group</mat-icon>
+    </mat-card>
+
+    <mat-card class="top-card">
+      <mat-card-header>
+        <mat-card-title class="title-card-top">Agenda</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <p class="content-number">12</p>
+        <p class="content-text">Aulas agendadas</p>
+      </mat-card-content>
+      <mat-icon class="top-icon icon-calendar">calendar_today</mat-icon>
+    </mat-card>
+
+    <mat-card class="top-card">
+      <mat-card-header>
+        <mat-card-title class="title-card-top">Assinaturas</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="card-content">
+        <p class="content-number">89</p>
+        <p class="content-text">Assinaturas ativas</p>
+      </mat-card-content>
+      <mat-icon class="top-icon icon-emoji_events">emoji_events</mat-icon>
+    </mat-card>
+  </div>
+
+  <!-- Cards inferiores -->
+  <div class="bottom-cards">
+    <!-- Ações Rápidas (header igual ao de Atividades Recentes) -->
+    <mat-card class="bottom-card quick-card">
+      <div class="quick-header">
+        <mat-icon class="quick-icon">flash_on</mat-icon>
+        <div>
+          <h2 class="quick-title">Ações Rápidas</h2>
+          <p class="quick-subtitle">
+            Acesso rápido às principais funcionalidades
+          </p>
+        </div>
+      </div>
+
+      <mat-card-actions class="card-actions">
+        <div class="button-group">
+          <button mat-button class="action-button" routerLink="/dashboard/students/new">
+            <mat-icon>add</mat-icon> Cadastrar Novo Aluno
+          </button>
+          <button mat-button class="action-button" routerLink="/dashboard/students">
+            <mat-icon>group</mat-icon> Ver Todos os Alunos
+          </button>
+          <button mat-button class="action-button" routerLink="/dashboard/agenda">
+            <mat-icon>calendar_today</mat-icon> Agendar Nova Aula
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Atividades Recentes -->
+    <mat-card class="bottom-card recent-card">
+      <div class="recent-header">
+        <mat-icon class="recent-icon">monitor_heart</mat-icon>
+        <div>
+          <h2 class="recent-title">Atividades Recentes</h2>
+          <p class="recent-subtitle">Últimas movimentações da sua conta</p>
+        </div>
+      </div>
+
+      <div class="activity-list">
+        <div
+          class="activity-item"
+          *ngFor="let movement of lastMovements; let i = index"
+          [style.--dot]="movement?.color || null"
+          [attr.data-index]="i"
+        >
+          <span class="bullet" aria-hidden="true"></span>
+
+          <div class="activity-text">
+            <span class="name">{{ movement.name }}</span>
+            <span class="desc">{{ movement.activity }}</span>
+          </div>
+
+          <span class="time">
+            {{ movement.time }}{{ movement.timeUnit || "h" }} atrás
+          </span>
+        </div>
+      </div>
+    </mat-card>
+  </div>
+</div>
