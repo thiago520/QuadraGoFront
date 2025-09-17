@@ -27,7 +27,7 @@
 .title {
   font-size: 2rem;
   font-weight: 600;
-  color: #0c2e5b; // Cor para contraste com o fundo primary
+  color: #0c2e5b;
 
   &:hover {
     cursor: pointer;
@@ -47,31 +47,37 @@
 }
 
 button[mat-button] {
-   transition: all 0.3s ease;
-   border-radius: 4px;
+  transition: all 0.3s ease;
+  border-radius: 4px;
 
-   &:hover {
-     background-color: #14b536;
-     color: white;
-     border-color: #14b536;
-   }
+  &:hover {
+    background-color: #14b536;
+    color: white;
+    border-color: #14b536;
+  }
 }
 
 .button-container {
   display: flex;
-  gap: 10px; // Espaçamento horizontal entre os botões
-  justify-content: flex-end; // Alinha os botões à direita
-  padding: 10px 20px; // Padding interno para o contêiner
-  margin-top: 10px; // Espaçamento acima do contêiner, se necessário
+  gap: 10px;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  margin-top: 10px;
 }
 
 .main-button {
-  min-width: 100px; // Largura mínima para consistência
-  text-transform: none; // Preserva o texto original
-  color: #1976d2; // Cor padrão do texto do botão stroked
+  min-width: 100px;
+  text-transform: none;
+  color: #1976d2;
 
   &:hover {
-    background-color: rgba(25, 118, 210, 0.1); // Efeito hover sutil
+    background-color: rgba(25, 118, 210, 0.1);
+  }
+
+  &.active { /* rota ativa */
+    background-color: rgba(25, 118, 210, 0.12);
+    color: #0f2167;
+    font-weight: 600;
   }
 }
 
@@ -81,16 +87,14 @@ button[mat-button] {
 
 .dashboard-content {
   padding: 20px;
-  min-height: calc(100vh - 64px); // Ajusta para o tamanho do toolbar (64px padrão)
+  min-height: calc(100vh - 64px);
   max-width: 1200px;
   margin: 0 auto;
 }
 
-// Media Queries para Responsividade
+/* Responsivo */
 @media (max-width: 768px) {
-  .dashboard-header {
-    padding: 10px;
-  }
+  .dashboard-header { padding: 10px; }
 
   .header-content {
     flex-direction: column;
@@ -101,28 +105,19 @@ button[mat-button] {
   .title-container {
     flex-direction: column;
     align-items: flex-start;
-    gap: 5px; // Reduz o espaçamento em telas menores
+    gap: 5px;
   }
 
-  .title {
-    font-size: 1.3rem;
-  }
+  .title { font-size: 1.3rem; }
+  .subtitle { font-size: 0.8rem; }
 
-  .subtitle {
-    font-size: 0.8rem;
-  }
-
-  .dashboard-content {
-    padding: 10px;
-  }
+  .dashboard-content { padding: 10px; }
 
   .button-container {
-    flex-direction: column; // Empilha os botões em telas menores
-    gap: 5px; // Reduz o espaçamento vertical
-    align-items: flex-end; // Mantém o alinhamento à direita
+    flex-direction: column;
+    gap: 5px;
+    align-items: flex-end;
   }
 
-  .main-button {
-    width: 100%; // Ocupa a largura total em telas menores
-  }
+  .main-button { width: 100%; }
 }

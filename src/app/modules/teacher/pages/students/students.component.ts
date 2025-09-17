@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { RouterLink } from '@angular/router';
 
 type StudentStatus = 'Ativo' | 'Inativo';
+type StudentPaymentStatus = 'Pago' | 'Pendente';
 
 interface Student {
   id: number;
@@ -16,6 +17,8 @@ interface Student {
   phone: string;
   birthDate: Date | string;
   status: StudentStatus;
+  paymentStatus: StudentPaymentStatus;
+  plan: string;
 }
 
 @Component({
@@ -43,6 +46,8 @@ export class StudentsComponent {
       phone: '(11) 99999-8888',
       birthDate: new Date(1995, 2, 14),
       status: 'Ativo',
+      paymentStatus: 'Pago',
+      plan: 'Premium'
     },
     {
       id: 2,
@@ -50,6 +55,8 @@ export class StudentsComponent {
       phone: '(11) 88888-7777',
       birthDate: new Date(1990, 6, 21),
       status: 'Ativo',
+      paymentStatus: 'Pago',
+      plan: 'Intermediário'
     },
     {
       id: 3,
@@ -57,6 +64,8 @@ export class StudentsComponent {
       phone: '(11) 77777-6666',
       birthDate: new Date(1998, 10, 7),
       status: 'Ativo',
+      paymentStatus: 'Pendente',
+      plan: 'Premium'
     },
     {
       id: 4,
@@ -64,6 +73,8 @@ export class StudentsComponent {
       phone: '(11) 66666-5555',
       birthDate: new Date(1986, 6, 15),
       status: 'Inativo',
+      paymentStatus: 'Pago',
+      plan: 'Intermediário'
     },
     {
       id: 5,
@@ -71,6 +82,8 @@ export class StudentsComponent {
       phone: '(11) 55555-4444',
       birthDate: new Date(1997, 4, 11),
       status: 'Ativo',
+      paymentStatus: 'Pendente',
+      plan: 'Básico'
     },
   ];
 

@@ -110,7 +110,9 @@
             <th>
               <mat-icon class="th-icon">calendar_month</mat-icon>Data Nascimento
             </th>
+            <th>Plano</th>
             <th>Status</th>
+            <th>Mensalidade</th>
             <th class="actions-col">Ações</th>
           </tr>
         </thead>
@@ -125,11 +127,26 @@
             </td>
             <td>
               <span
+                class="status-plan">
+                {{ s.plan }}
+              </span>
+            </td>
+            <td>
+              <span
                 class="status-pill"
                 [class.active]="s.status === 'Ativo'"
                 [class.inactive]="s.status !== 'Ativo'"
               >
                 {{ s.status }}
+              </span>
+            </td>
+            <td>
+              <span
+                class="status-payment"
+                [class.active]="s.paymentStatus === 'Pago'"
+                [class.inactive]="s.paymentStatus !== 'Pago'"
+              >
+                {{ s.paymentStatus }}
               </span>
             </td>
             <td class="actions">

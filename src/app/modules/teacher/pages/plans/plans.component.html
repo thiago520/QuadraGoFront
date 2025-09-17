@@ -1,0 +1,70 @@
+<div class="plans-page">
+  <header class="page-hero">
+    <h1>Gerencie seus Planos</h1>
+    <p class="subtitle">
+      Crie, edite e organize os planos de assinatura que estarão disponíveis
+      para seus alunos.
+    </p>
+  </header>
+
+  <section class="cards-grid">
+    <ng-container *ngFor="let p of plans">
+      <!-- Card "Criar Novo Plano" (placeholder) -->
+      <button
+        *ngIf="p.isPlaceholder; else planCard"
+        class="plan-card create-card"
+        (click)="createNewPlan()"
+      >
+        <div class="create-icon">
+          <mat-icon>add</mat-icon>
+        </div>
+        <h3>Criar Novo Plano</h3>
+        <p>Personalize um plano específico para suas necessidades</p>
+      </button>
+
+      <!-- Card de Plano -->
+      <ng-template #planCard>
+        <mat-card class="plan-card" [class.emphasized]="p.emphasized">
+          <!-- Selo Popular -->
+          <div class="badge" *ngIf="p.popular">Popular</div>
+
+          <div class="icon-wrap">
+            <mat-icon>{{ p.icon }}</mat-icon>
+          </div>
+
+          <h3 class="plan-name">{{ p.name }}</h3>
+
+          <div class="price">
+            <span class="currency">R$</span>
+            <!-- Usando number para não duplicar "R$" (evita 'R$R$') -->
+            <span class="amount">{{ p.price | number : "1.2-2" }}</span>
+            <span class="period">/{{ p.period }}</span>
+          </div>
+
+          <ul class="features">
+            <li *ngFor="let f of p.features">
+              <mat-icon class="check">done</mat-icon> {{ f }}
+            </li>
+          </ul>
+
+          <button
+            mat-stroked-button
+            class="choose-btn"
+            [class.primary]="p.emphasized"
+            (click)="choose(p)"
+          >
+            Alterar
+          </button>
+        </mat-card>
+      </ng-template>
+    </ng-container>
+  </section>
+
+  <!-- CTA secundária -->
+  <div class="sales-cta">
+    <p>Precisa de um plano personalizado?</p>
+    <button mat-stroked-button (click)="talkToTeacher()">
+      Falar com Professor
+    </button>
+  </div>
+</div>

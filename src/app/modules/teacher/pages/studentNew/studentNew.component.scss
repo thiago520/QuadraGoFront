@@ -36,6 +36,10 @@ h1 {
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 20px;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 }
 
 .form-header {
@@ -71,35 +75,59 @@ h1 {
   width: 100%;
 }
 
+/* ------------------------- */
+/* BOTÕES: menos arredondados
+   e largura total dos inputs */
+/* ------------------------- */
 .form-actions {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   gap: 12px;
   margin-top: 8px;
 
   button {
+    flex: 1;                  /* cada botão ocupa 50% */
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 6px;
+    height: 56px;             /* mesma altura dos mat-form-field */
+    border-radius: 4px !important; /* cantos menos arredondados */
   }
 }
 
+/* Dicas */
 .tips-card {
   background: #f9fafb;
   border: 1px solid #e0e0e0;
   border-radius: 12px;
   padding: 16px;
   display: flex;
-  align-items: flex-start;
+  align-items: flex-start; /* ícone e textos lado a lado */
   gap: 12px;
+  flex-direction: row;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
 
   mat-icon {
     font-size: 24px;
     color: #1976d2;
-    margin-top: 2px;
+    flex-shrink: 0;       /* não deixa o ícone encolher */
+    margin-top: 2px;      /* leve ajuste para alinhar melhor */
+  }
+
+  .tips-text {            /* novo wrapper opcional para texto */
+    flex: 1;              /* ocupa o resto da largura */
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
   }
 
   h3 {
-    margin: 0 0 6px;
+    margin: 0;
     font-weight: 600;
     color: #0f172a;
   }
@@ -107,7 +135,7 @@ h1 {
   ul {
     margin: 0;
     padding-left: 20px;
-    color: #374151;
+    color: #6b7280;
     font-size: 0.9rem;
 
     li {
