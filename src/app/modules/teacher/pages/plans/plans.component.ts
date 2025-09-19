@@ -3,21 +3,23 @@ import { Component, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PlanFormComponent } from '../plan-form/plan-form.component';
 
-type BillingPeriod = 'mês' | 'ano';
+type Period = 'Mensal' | 'Bimestral' | 'Trimestral' | 'Semestral' | 'Anual';
 const GRID_SIZE = 4;
 
 interface Plan {
   id: number;
   name: string;
-  icon: string; // nome do mat-icon
-  price: number; // em BRL
-  period: BillingPeriod;
+  icon: string;
+  price: number;
+  period: Period;
   features: string[];
-  subscriptionsCount?: number; // usado para Popular
-  popular?: boolean; // badge
-  emphasized?: boolean; // borda azul
-  isPlaceholder?: boolean; // vira "Criar novo plano"
+  subscriptionsCount?: number;
+  popular?: boolean;
+  emphasized?: boolean;
+  isPlaceholder?: boolean;
 }
 
 type PlanFromApi = {
@@ -25,10 +27,10 @@ type PlanFromApi = {
   name: string;
   icon: string;
   price: number;
-  period: 'mês' | 'ano';
+  /** Ideal: API já devolver neste formato */
+  period: Period;
   features: string[];
   subscriptionsCount: number;
-  emphasized?: boolean;
 };
 
 @Component({
@@ -39,6 +41,7 @@ type PlanFromApi = {
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    MatDialogModule,
   ],
   templateUrl: './plans.component.html',
   styleUrls: ['./plans.component.scss'],
@@ -46,19 +49,19 @@ type PlanFromApi = {
 export class PlansComponent implements OnInit {
   plans: Plan[] = [];
 
-  ngOnInit(): void {
-    // Troque pelo HttpClient real:
-    // this.http.get<PlanFromApi[]>('/api/teacher/plans').subscribe(res => this.hydrateFromApi(res));
+  constructor(private dialog: MatDialog) {}
 
-    // MOCK: altere para testar
+  trackByPlan = (_: number, p: Plan) => p.id ?? p.name;
+
+  ngOnInit(): void {
+    // MOCK — troque por HttpClient. Já usando Period unificado.
     const apiMock: PlanFromApi[] = [
-      // experimente [] ou 1..3 itens
       {
         id: 1,
         name: 'Básico',
         icon: 'group',
         price: 29.9,
-        period: 'mês',
+        period: 'Trimestral',
         features: [
           'Até 50 alunos',
           'Agendamento básico',
@@ -72,7 +75,7 @@ export class PlansComponent implements OnInit {
         name: 'Profissional',
         icon: 'emoji_events',
         price: 59.9,
-        period: 'mês',
+        period: 'Mensal',
         features: [
           'Até 200 alunos',
           'Agendamento avançado',
@@ -82,51 +85,30 @@ export class PlansComponent implements OnInit {
         ],
         subscriptionsCount: 87,
       },
-      {
-        id: 2,
-        name: 'Profissional',
-        icon: 'emoji_events',
-        price: 99.9,
-        period: 'mês',
-        features: [
-          'Até 200 alunos',
-          'Agendamento avançado',
-          'Relatórios detalhados',
-          'Pagamentos integrados',
-          'Suporte prioritário',
-        ],
-        subscriptionsCount: 85,
-      },
     ];
     this.hydrateFromApi(apiMock);
   }
 
-  /** Preenche estado a partir do retorno de API garantindo sempre 4 cards */
   private hydrateFromApi(data: PlanFromApi[] | null | undefined): void {
     if (!data || data.length === 0) {
       this.plans = this.buildPlaceholders(GRID_SIZE);
       return;
     }
 
-    // 1) mapeia e limita aos 4 primeiros
     const mapped: Plan[] = data.slice(0, GRID_SIZE).map((p) => ({
       id: p.id,
       name: p.name,
       icon: p.icon,
       price: p.price,
-      period: p.period,
+      period: p.period, // já é Period do form
       features: p.features ?? [],
       subscriptionsCount: p.subscriptionsCount ?? 0,
-      // emphasized populado pelo "popular" depois
       emphasized: false,
       popular: false,
       isPlaceholder: false,
     }));
 
-    // 2) aplica Popular + borda azul no plano com mais assinaturas
     const withPopular = this.applyPopularAndEmphasis(mapped);
-
-    // 3) completa com placeholders até totalizar 4
     const missing = GRID_SIZE - withPopular.length;
     this.plans =
       missing > 0
@@ -134,13 +116,10 @@ export class PlansComponent implements OnInit {
         : withPopular;
   }
 
-  /** Marca 'popular' e 'emphasized' no plano com maior subscriptionsCount (desempate: primeiro) */
   private applyPopularAndEmphasis(plans: Plan[]): Plan[] {
     if (!plans.length) return plans;
-
     const max = Math.max(...plans.map((p) => p.subscriptionsCount ?? 0));
     let marked = false;
-
     return plans.map((p) => {
       const isTop = !marked && (p.subscriptionsCount ?? 0) === max;
       if (isTop) marked = true;
@@ -148,14 +127,13 @@ export class PlansComponent implements OnInit {
     });
   }
 
-  /** Gera N placeholders para "Criar novo plano" */
   private buildPlaceholders(n: number): Plan[] {
     return Array.from({ length: n }, (_, i) => ({
       id: 1000 + i,
       name: 'Criar Novo Plano',
       icon: 'add',
       price: 0,
-      period: 'mês',
+      period: 'Mensal', // default qualquer; não é exibido no placeholder
       features: [],
       subscriptionsCount: 0,
       popular: false,
@@ -164,23 +142,79 @@ export class PlansComponent implements OnInit {
     }));
   }
 
-  // Ações
-  choose(plan: Plan) {
+  // ===== Helpers de UI =====
+  periodSuffix(period: Period): string {
+    switch (period) {
+      case 'Mensal':
+        return 'mês';
+      case 'Bimestral':
+        return 'bimestre';
+      case 'Trimestral':
+        return 'trimestre';
+      case 'Semestral':
+        return 'semestre';
+      case 'Anual':
+        return 'ano';
+    }
+  }
+
+  // ====== DIALOGS ======
+  openCreateDialog() {
+    const dialogRef = this.dialog.open(PlanFormComponent, {
+      width: '720px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
+      panelClass: 'plan-form-dialog',
+      data: null, // criação
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // TODO: chamar API para criar e refazer a lista
+        console.log('CREATE PLAN result', result);
+        // this.reload();
+      }
+    });
+  }
+
+  openEditDialog(plan: Plan) {
     if (plan.isPlaceholder) {
-      this.createNewPlan();
+      this.openCreateDialog();
       return;
     }
-    console.log('Escolheu plano:', plan);
-    // this.router.navigate(['/dashboard/planos', plan.id, 'checkout']);
+
+    const dialogRef = this.dialog.open(PlanFormComponent, {
+      width: '720px',
+      maxWidth: '95vw',
+      maxHeight: '90vh',
+      disableClose: true,
+      autoFocus: false,
+      restoreFocus: false,
+      panelClass: 'plan-form-dialog',
+      data: {
+        id: plan.id,
+        icon: plan.icon,
+        title: plan.name,
+        price: plan.price,
+        period: plan.period, // já é Period do form
+        features: plan.features,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // TODO: chamar API de update e refazer a lista
+        console.log('EDIT PLAN result', result);
+        // this.reload();
+      }
+    });
   }
 
-  createNewPlan() {
-    console.log('Criar novo plano');
-    // this.router.navigate(['/dashboard/planos/novo']);
-  }
-
-  talkToTeacher() {
+  openTalkToTeacher() {
     console.log('Falar com Professor');
-    // window.open('https://wa.me/5544991010353', '_blank');
+    // window.open('https://wa.me/55XXXXXXXXXXX', '_blank');
   }
 }

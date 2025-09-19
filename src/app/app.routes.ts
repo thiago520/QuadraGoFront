@@ -41,7 +41,7 @@ export const routes: Routes = [
       {
         path: 'students/new',
         loadComponent: () =>
-          import('./modules/teacher/pages/studentNew/studentNew.component').then(m => m.StudentNewComponent)
+          import('./modules/teacher/pages/student-form/student-form.component').then(m => m.StudentFormComponent)
       },
       {
         path: 'agenda',

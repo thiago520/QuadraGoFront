@@ -1,0 +1,154 @@
+.plan-form-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 16px 20px 28px;
+}
+
+.page-hero {
+  text-align: center;
+  margin-bottom: 16px;
+
+  h1 {
+    margin: 0 0 6px;
+    font-weight: 700;
+    color: #0f172a;
+  }
+
+  .subtitle {
+    margin: 0;
+    color: #6b7280;
+  }
+}
+
+.form-card {
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 18px 18px 22px;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(2, 6, 23, 0.08);
+  }
+}
+
+.form-header {
+  margin-bottom: 8px;
+
+  h2 {
+    margin: 0;
+    font-weight: 700;
+    color: #0f172a;
+  }
+}
+
+.form-body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-field {
+  width: 100%;
+}
+
+.row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+
+  .form-field {
+    width: 100%;
+  }
+}
+
+/* ===== Características ===== */
+.features-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+
+  h3 {
+    margin: 0;
+    color: #0f172a;
+    font-weight: 600;
+  }
+}
+
+.features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.feature-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+
+  .feature-field {
+    width: 100%;
+  }
+}
+
+/* Botão de remover característica (ícone) */
+.remove-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 4px !important; /* menos arredondado, padrão do projeto */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &:hover {
+    background-color: #f87171;
+    color: white;
+  }
+}
+
+/* ===== Ações do formulário ===== */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+/* ===== Bordas menos arredondadas nos botões (MDC) ===== */
+/* Dentro do conteúdo do form (ex.: Adicionar) */
+.plan-form-page {
+  .mat-mdc-unelevated-button,  /* mat-flat-button (Criar/Atualizar dentro do form, se houver) */
+  .mat-mdc-outlined-button {   /* mat-stroked-button (Adicionar) */
+    border-radius: 4px !important;
+  }
+}
+
+/* Ações do diálogo (Cancelar / Criar|Atualizar) ficam fora do .plan-form-page */
+.dialog-actions {
+  .mat-mdc-unelevated-button,  /* mat-flat-button */
+  .mat-mdc-outlined-button {   /* mat-stroked-button */
+    border-radius: 4px !important;
+  }
+}
+
+/* Tamanho/padding padrão para todos os botões principais do form e do dialog */
+.plan-form-page .mat-mdc-unelevated-button,
+.plan-form-page .mat-mdc-outlined-button,
+.dialog-actions .mat-mdc-unelevated-button,
+.dialog-actions .mat-mdc-outlined-button {
+  height: 44px;
+  padding: 0 18px;
+  text-transform: none;
+}
+
+/* ===== Responsivo ===== */
+@media (max-width: 640px) {
+  .row-2 {
+    grid-template-columns: 1fr;
+  }
+}

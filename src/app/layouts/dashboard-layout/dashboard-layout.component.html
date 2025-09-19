@@ -15,6 +15,7 @@
           class="main-button"
           [routerLink]="item.link"
           routerLinkActive="active"
+          [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
         >
           {{ item.label }}
         </button>

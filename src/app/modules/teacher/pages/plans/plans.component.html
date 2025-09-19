@@ -2,18 +2,18 @@
   <header class="page-hero">
     <h1>Gerencie seus Planos</h1>
     <p class="subtitle">
-      Crie, edite e organize os planos de assinatura que estarão disponíveis
-      para seus alunos.
+      Defina os planos que seus alunos poderão contratar, ajuste valores,
+      benefícios e torne sua gestão mais simples e organizada.
     </p>
   </header>
 
   <section class="cards-grid">
-    <ng-container *ngFor="let p of plans">
-      <!-- Card "Criar Novo Plano" (placeholder) -->
+    <ng-container *ngFor="let p of plans; trackBy: trackByPlan">
+      <!-- Placeholder vira "Criar novo plano" -->
       <button
         *ngIf="p.isPlaceholder; else planCard"
         class="plan-card create-card"
-        (click)="createNewPlan()"
+        (click)="openCreateDialog()"
       >
         <div class="create-icon">
           <mat-icon>add</mat-icon>
@@ -22,10 +22,9 @@
         <p>Personalize um plano específico para suas necessidades</p>
       </button>
 
-      <!-- Card de Plano -->
+      <!-- Card normal -->
       <ng-template #planCard>
         <mat-card class="plan-card" [class.emphasized]="p.emphasized">
-          <!-- Selo Popular -->
           <div class="badge" *ngIf="p.popular">Popular</div>
 
           <div class="icon-wrap">
@@ -36,9 +35,8 @@
 
           <div class="price">
             <span class="currency">R$</span>
-            <!-- Usando number para não duplicar "R$" (evita 'R$R$') -->
-            <span class="amount">{{ p.price | number : "1.2-2" }}</span>
-            <span class="period">/{{ p.period }}</span>
+            <span class="amount">{{ p.price | number: '1.2-2' }}</span>
+            <span class="period">/{{ periodSuffix(p.period) }}</span>
           </div>
 
           <ul class="features">
@@ -47,24 +45,19 @@
             </li>
           </ul>
 
-          <button
-            mat-stroked-button
-            class="choose-btn"
-            [class.primary]="p.emphasized"
-            (click)="choose(p)"
-          >
-            Alterar
-          </button>
+          <!-- Ações do card -->
+          <div style="display:flex; gap:10px; margin-top:auto; justify-content:center;">
+            <button mat-stroked-button class="choose-btn" (click)="openEditDialog(p)">
+              Editar
+            </button>
+          </div>
         </mat-card>
       </ng-template>
     </ng-container>
   </section>
 
-  <!-- CTA secundária -->
   <div class="sales-cta">
     <p>Precisa de um plano personalizado?</p>
-    <button mat-stroked-button (click)="talkToTeacher()">
-      Falar com Professor
-    </button>
+    <button mat-stroked-button (click)="openTalkToTeacher()">Falar com professor</button>
   </div>
 </div>

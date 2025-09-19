@@ -12,6 +12,7 @@ interface MenuItem {
   label: string;
   link?: string | any[];
   action?: 'logout';
+  exact?: boolean; // << novo
 }
 
 interface HeaderModel {
@@ -71,7 +72,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
       return {
         subtitle: 'Painel do Professor',
         menu: [
-          { label: 'Painel', link: ['/dashboard'] },
+          { label: 'Painel', link: ['/dashboard'], exact: true },
           { label: 'Alunos', link: ['/dashboard/students'] },
           { label: 'Planos', link: ['/dashboard/plans'] },
           { label: 'Sair', action: 'logout' },
@@ -82,7 +83,7 @@ export class DashboardLayoutComponent implements OnInit, OnDestroy {
     return {
       subtitle: 'Painel da Quadra',
       menu: [
-        { label: 'Painel', link: ['/dashboard'] },
+        { label: 'Painel', link: ['/dashboard'], exact: true },
         { label: 'Quadras', link: ['/dashboard/quadras'] },
         { label: 'Reservas', link: ['/dashboard/reservas'] },
         { label: 'Financeiro', link: ['/dashboard/financeiro'] },

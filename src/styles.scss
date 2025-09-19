@@ -22,6 +22,53 @@ button[mat-stroked-button], [mat-raised-button], [mat-button] {
    }
 }
 
+/* Escopo apenas para esse diálogo */
+.plan-form-dialog {
+
+  /* Superfície do diálogo (limita altura total à viewport) */
+  .mdc-dialog__surface {
+    max-height: 90vh; /* combina com maxHeight do open() */
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Área rolável do conteúdo */
+  .mat-mdc-dialog-content {
+    padding: 0; /* você já tem paddings internos no form */
+    overflow: auto;
+    max-height: calc(90vh - 64px - 72px);
+    /* 64px ~= título, 72px ~= ações. Ajuste se seu título/ações mudarem */
+  }
+
+  /* Deixe o título com um padding confortável */
+  .mat-mdc-dialog-title {
+    padding: 16px 24px 0 24px;
+    margin: 0;
+    font-weight: 700;
+  }
+
+  /* Ações fixas na base do diálogo */
+  .mat-mdc-dialog-actions.dialog-actions {
+    position: sticky;
+    bottom: 0;
+    background: #fff;
+    border-top: 1px solid #e5e7eb;
+    padding: 12px 16px;
+    z-index: 1;
+  }
+}
+
+.snack-success .mdc-snackbar__surface {
+  background: #16a34a;
+  color: #fff;
+}
+.snack-warn .mdc-snackbar__surface {
+  background: #f59e0b;
+  color: #111827;
+}
+
+
+
 
 // ESTILOS GLOBAIS ADICIONAIS
 // -------------------------------------------------

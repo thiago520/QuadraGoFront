@@ -10,7 +10,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @Component({
-  selector: 'app-student-new',
+  selector: 'app-student-form',
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -22,10 +22,10 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
     MatInputModule,
     MatDatepickerModule
   ],
-  templateUrl: './studentNew.component.html',
-  styleUrls: ['./studentNew.component.scss']
+  templateUrl: './student-form.component.html',
+  styleUrls: ['./student-form.component.scss']
 })
-export class StudentNewComponent {
+export class StudentFormComponent {
    studentForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
