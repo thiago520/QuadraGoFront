@@ -44,9 +44,9 @@ export const routes: Routes = [
           import('./modules/teacher/pages/student-form/student-form.component').then(m => m.StudentFormComponent)
       },
       {
-        path: 'agenda',
+        path: 'schedule',
         loadComponent: () =>
-          import('./modules/teacher/pages/agenda/agenda.component').then(m => m.AgendaComponent)
+          import('./modules/teacher/pages/schedule/schedule.component').then(m => m.ScheduleComponent)
       },
       {
         path: 'plans',
