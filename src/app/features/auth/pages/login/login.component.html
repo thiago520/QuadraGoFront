@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="login-container" [formGroup]="form">
   <mat-toolbar color="primary" class="header-toolbar">
     <div class="brand-container">
       <span class="title">QuadraGo</span>
@@ -12,14 +12,13 @@
       Entre com suas credenciais para acessar sua conta
     </p>
 
-    <form class="login-form">
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Email</mat-label>
         <input
           matInput
           placeholder="seu@email.com"
-          [(ngModel)]="email"
-          name="email"
+          formControlName="email"
           required
         />
       </mat-form-field>
@@ -30,25 +29,23 @@
           matInput
           type="password"
           placeholder="Digite sua senha"
-          [(ngModel)]="password"
-          name="password"
+          formControlName="password"
           required
         />
         <mat-icon matSuffix>visibility</mat-icon>
       </mat-form-field>
 
       <div class="options-row">
-        <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe"
-          >Lembrar de mim</mat-checkbox
-        >
-        <a href="#" class="forgot-password">Esqueceu a senha?</a>
+        <mat-checkbox formControlName="rememberMe">Lembrar de mim</mat-checkbox>
+        <a routerLink="/forgot" class="forgot-password">Esqueceu a senha?</a>
       </div>
 
       <button
         mat-raised-button
         color="primary"
         class="full-width"
-        [disabled]="!email || !password"
+        type="submit"
+        [disabled]="form.invalid || loading()"
       >
         Entrar
       </button>
@@ -58,11 +55,11 @@
       </div>
 
       <div class="social-login">
-        <button mat-stroked-button class="social-button google">
+        <button mat-stroked-button class="social-button google" type="button">
           <i class="fab fa-google"></i> Entrar com Google
         </button>
 
-        <button mat-stroked-button class="social-button facebook">
+        <button mat-stroked-button class="social-button facebook" type="button">
           <i class="fab fa-facebook-f"></i> Entrar com Facebook
         </button>
       </div>
@@ -70,8 +67,8 @@
       <p class="signup-link">
         Não tem uma conta? <a routerLink="/signup">Crie conta</a>
       </p>
-      <!-- Novo botão Voltar ao Início -->
-      <button mat-button routerLink="/" class="back-button">
+
+      <button mat-button routerLink="/" class="back-button" type="button">
         ← Voltar ao Início
       </button>
     </form>
