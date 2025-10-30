@@ -1,3 +1,4 @@
+/* ====== Dashboard (layout base) ====== */
 .dashboard-body {
   display: flex;
   flex-direction: column;
@@ -24,7 +25,7 @@
   }
 }
 
-/* ==== Top Cards ==== */
+/* ====== Top Cards ====== */
 .top-cards {
   display: flex;
   gap: 20px;
@@ -50,18 +51,12 @@
   right: 10px;
   font-size: 24px;
 
-  &.icon-group {
-    color: #1976d2;
-  }
-  &.icon-calendar {
-    color: #4caf50;
-  }
-  &.icon-emoji_events {
-    color: #ff9800;
-  }
+  &.icon-group { color: #1976d2; }
+  &.icon-calendar { color: #4caf50; }
+  &.icon-emoji_events { color: #ff9800; }
 }
 
-/* ==== Bottom Cards ==== */
+/* ====== Bottom Cards ====== */
 .bottom-cards {
   display: flex;
   gap: 20px;
@@ -95,6 +90,8 @@ mat-card-header {
 .card-content {
   padding: 16px;
   text-align: left;
+  /* ajuda a evitar "pulos" durante skeleton */
+  min-height: 84px;
 }
 
 .content-number {
@@ -116,11 +113,9 @@ mat-card-header {
   color: #666;
 }
 
-.card-actions {
-  padding: 0 16px 16px 16px;
-}
+.card-actions { padding: 0 16px 16px 16px; }
 
-/* ==== Ações Rápidas (mesmo padrão do Atividades Recentes) ==== */
+/* ====== Ações Rápidas ====== */
 .quick-card {
   border: 1px solid #e8eef5;
   border-radius: 12px;
@@ -136,7 +131,7 @@ mat-card-header {
 
 .quick-icon {
   font-size: 28px;
-  color: #1976d2; /* azul para diferenciar do verde do outro card */
+  color: #1976d2;
 }
 
 .quick-title {
@@ -152,7 +147,7 @@ mat-card-header {
   color: #6b7280;
 }
 
-/* ==== Botões das Ações Rápidas ==== */
+/* Botões das Ações Rápidas */
 .button-group {
   display: flex;
   flex-direction: column;
@@ -169,17 +164,13 @@ mat-card-header {
   font-size: 1rem;
   margin-top: 12px;
 
-  mat-icon {
-    margin-right: 8px;
-  }
+  mat-icon { margin-right: 8px; }
 
   &:first-child {
     background-color: #1976d2;
     color: #fff;
 
-    &:hover {
-      background-color: #1565c0;
-    }
+    &:hover { background-color: #1565c0; }
   }
 
   &:not(:first-child) {
@@ -194,7 +185,7 @@ mat-card-header {
   }
 }
 
-/* ==== Atividades Recentes ==== */
+/* ====== Atividades Recentes ====== */
 .recent-card {
   border: 1px solid #e8eef5;
   border-radius: 12px;
@@ -241,69 +232,128 @@ mat-card-header {
   background: #f6f8fb;
   border-radius: 12px;
   padding: 14px 18px;
+
+  .bullet {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--dot);
+    flex: 0 0 10px;
+  }
+
+  .activity-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    flex: 1;
+
+    .name {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .desc {
+      font-size: 0.95rem;
+      color: #6b7280;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .time {
+    margin-left: auto;
+    font-size: 0.95rem;
+    color: #6b7280;
+    white-space: nowrap;
+  }
 }
 
-.activity-item .bullet {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--dot);
-  flex: 0 0 10px;
-}
-
-.activity-text {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  flex: 1;
-}
-
-.activity-text .name {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.activity-text .desc {
-  font-size: 0.95rem;
-  color: #6b7280;
-  white-space: nowrap;
+/* ====== Skeleton Loaders (shimmer) ====== */
+.skeleton {
+  position: relative;
   overflow: hidden;
-  text-overflow: ellipsis;
+  border-radius: 8px;
+  background: #e5e7eb; /* cinza-200 */
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+    animation: shimmer 1.2s infinite;
+  }
 }
 
-.activity-item .time {
-  margin-left: auto;
-  font-size: 0.95rem;
+@keyframes shimmer { 100% { transform: translateX(100%); } }
+
+/* Formatos dos skeletons usados no template */
+.skeleton-number { width: 96px; height: 36px; margin: 8px 0 6px; }
+.skeleton-text   { width: 160px; height: 16px; }
+
+.skeleton-line {
+  width: 240px; max-width: 60%; height: 14px; margin-bottom: 8px;
+  &.short { width: 160px; max-width: 40%; }
+}
+
+.skeleton-time   { width: 80px; height: 14px; }
+.skeleton-bullet {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 9999px;
+  background: #e5e7eb;
+}
+
+/* ====== Empty States ====== */
+.empty-state {
+  display: grid;
+  place-items: center;
+  padding: 24px 12px;
+  text-align: center;
   color: #6b7280;
-  white-space: nowrap;
 }
 
-/* ==== Responsividade ==== */
+.empty-icon {
+  font-size: 40px;
+  margin-bottom: 8px;
+
+  &.error { color: #ef4444; }
+}
+
+.empty-title {
+  margin: 0;
+  font-weight: 600;
+}
+
+.empty-subtitle {
+  margin: 6px 0 0;
+  font-size: 0.95rem;
+}
+
+/* Utilitários simples */
+.w-full { width: 100%; }
+
+/* ====== Responsividade ====== */
 @media (max-width: 768px) {
   .top-cards,
   .bottom-cards {
     flex-direction: column;
     gap: 15px;
   }
+
   .top-card,
-  .bottom-card {
-    width: 100%;
-  }
+  .bottom-card { width: 100%; }
 
   .quick-card,
-  .recent-card {
-    padding: 16px;
-  }
+  .recent-card { padding: 16px; }
+
   .quick-title,
-  .recent-title {
-    font-size: 1.5rem;
-  }
-  .activity-item {
-    padding: 12px 14px;
-  }
+  .recent-title { font-size: 1.5rem; }
+
+  .activity-item { padding: 12px 14px; }
+
   .quick-subtitle,
   .recent-subtitle,
-  .activity-item .time {
-    font-size: 0.9rem;
-  }
+  .activity-item .time { font-size: 0.9rem; }
 }

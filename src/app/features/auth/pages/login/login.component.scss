@@ -74,6 +74,7 @@ h2 {
   .forgot-password {
     color: #1976d2;
     text-decoration: none;
+    cursor: pointer;
 
     &:hover {
       text-decoration: underline;
@@ -148,6 +149,7 @@ h2 {
   font-size: 0.8rem;
   color: #666;
   margin-top: 20px;
+  cursor: pointer;
 
   a {
     color: #1976d2;

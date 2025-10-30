@@ -28,93 +28,103 @@
           matInput
           formControlName="name"
           placeholder="Digite o nome completo do aluno"
-        />
-        <mat-icon matPrefix>person</mat-icon>
-        <mat-error *ngIf="studentForm.get('name')?.hasError('required')">
-          O nome é obrigatório
-        </mat-error>
-      </mat-form-field>
+          />
+          <mat-icon matPrefix>person</mat-icon>
+          @if (studentForm.get('name')?.hasError('required')) {
+            <mat-error>
+              O nome é obrigatório
+            </mat-error>
+          }
+        </mat-form-field>
 
-      <!-- Email -->
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Email *</mat-label>
-        <input
-          matInput
-          formControlName="email"
-          placeholder="Digite o email do aluno"
-          type="email"
-        />
-        <mat-icon matPrefix>email</mat-icon>
-        <mat-error *ngIf="studentForm.get('email')?.hasError('required')">
-          O email é obrigatório
-        </mat-error>
-        <mat-error *ngIf="studentForm.get('email')?.hasError('email')">
-          Informe um email válido
-        </mat-error>
-      </mat-form-field>
+        <!-- Email -->
+        <mat-form-field appearance="outline" class="form-field">
+          <mat-label>Email *</mat-label>
+          <input
+            matInput
+            formControlName="email"
+            placeholder="Digite o email do aluno"
+            type="email"
+            />
+            <mat-icon matPrefix>email</mat-icon>
+            @if (studentForm.get('email')?.hasError('required')) {
+              <mat-error>
+                O email é obrigatório
+              </mat-error>
+            }
+            @if (studentForm.get('email')?.hasError('email')) {
+              <mat-error>
+                Informe um email válido
+              </mat-error>
+            }
+          </mat-form-field>
 
-      <!-- Telefone -->
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Telefone *</mat-label>
-        <input matInput formControlName="phone" placeholder="(11) 99999-8888" />
-        <mat-icon matPrefix>phone</mat-icon>
-        <mat-error *ngIf="studentForm.get('phone')?.hasError('required')">
-          O telefone é obrigatório
-        </mat-error>
-      </mat-form-field>
+          <!-- Telefone -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Telefone *</mat-label>
+            <input matInput formControlName="phone" placeholder="(11) 99999-8888" />
+            <mat-icon matPrefix>phone</mat-icon>
+            @if (studentForm.get('phone')?.hasError('required')) {
+              <mat-error>
+                O telefone é obrigatório
+              </mat-error>
+            }
+          </mat-form-field>
 
-      <!-- Data Nascimento -->
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Data de Nascimento *</mat-label>
-        <input
-          matInput
-          formControlName="birthDate"
-          [matDatepicker]="picker"
-          placeholder="dd/mm/aaaa"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-icon matPrefix>calendar_today</mat-icon>
-        <mat-error *ngIf="studentForm.get('birthDate')?.hasError('required')">
-          A data de nascimento é obrigatória
-        </mat-error>
-      </mat-form-field>
+          <!-- Data Nascimento -->
+          <mat-form-field appearance="outline" class="form-field">
+            <mat-label>Data de Nascimento *</mat-label>
+            <input
+              matInput
+              formControlName="birthDate"
+              [matDatepicker]="picker"
+              placeholder="dd/mm/aaaa"
+              />
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+              <mat-icon matPrefix>calendar_today</mat-icon>
+              @if (studentForm.get('birthDate')?.hasError('required')) {
+                <mat-error>
+                  A data de nascimento é obrigatória
+                </mat-error>
+              }
+            </mat-form-field>
 
-      <!-- Ações -->
-      <div class="form-actions">
-        <button
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [disabled]="studentForm.invalid"
-        >
-          <mat-icon>check</mat-icon>
-          Salvar Aluno
-        </button>
-        <button
-          mat-stroked-button
-          color="warn"
-          type="button"
-          routerLink="/dashboard/students"
-        >
-          <mat-icon>arrow_back</mat-icon>
-          Cancelar
-        </button>
+            <!-- Ações -->
+            <div class="form-actions">
+              <button
+                mat-raised-button
+                color="primary"
+                type="submit"
+                [disabled]="studentForm.invalid"
+                >
+                <mat-icon>check</mat-icon>
+                Salvar Aluno
+              </button>
+              <button
+                mat-stroked-button
+                color="warn"
+                type="button"
+                routerLink="/dashboard/students"
+                >
+                <mat-icon>arrow_back</mat-icon>
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </mat-card>
+
+        <!-- Dicas -->
+        <mat-card class="tips-card">
+          <mat-icon>info</mat-icon>
+          <div class="tips-text">
+            <h3>Dicas de Preenchimento</h3>
+            <ul>
+              <li>O nome deve ser completo (nome e sobrenome)</li>
+              <li>O email deve estar em formato válido (ex: aluno&#64;email.com)</li>
+              <li>O telefone deve seguir o formato (11) 99999-8888</li>
+              <li>A data de nascimento é usada para calcular a idade do aluno</li>
+            </ul>
+          </div>
+        </mat-card>
       </div>
-    </form>
-  </mat-card>
-
-  <!-- Dicas -->
-  <mat-card class="tips-card">
-    <mat-icon>info</mat-icon>
-    <div class="tips-text">
-      <h3>Dicas de Preenchimento</h3>
-      <ul>
-        <li>O nome deve ser completo (nome e sobrenome)</li>
-        <li>O email deve estar em formato válido (ex: aluno&#64;email.com)</li>
-        <li>O telefone deve seguir o formato (11) 99999-8888</li>
-        <li>A data de nascimento é usada para calcular a idade do aluno</li>
-      </ul>
-    </div>
-  </mat-card>
-</div>

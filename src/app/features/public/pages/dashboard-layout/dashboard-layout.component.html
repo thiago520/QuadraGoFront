@@ -7,30 +7,29 @@
     </div>
 
     <div class="button-container">
-      <ng-container *ngFor="let item of menu">
+      @for (item of menu; track item) {
         <!-- Botão de NAVEGAÇÃO (tem link) -->
-        <button
-          *ngIf="item.link; else actionBtn"
-          mat-button
-          class="main-button"
-          [routerLink]="item.link"
-          routerLinkActive="active"
-          [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
-        >
-          {{ item.label }}
-        </button>
-
-        <!-- Botão de AÇÃO (ex.: Sair) -->
-        <ng-template #actionBtn>
+        @if (item.link) {
+          <button
+            mat-button
+            class="main-button"
+            [routerLink]="item.link"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="item.exact ? { exact: true } : { exact: false }"
+            >
+            {{ item.label }}
+          </button>
+        } @else {
           <button
             mat-button
             class="main-button"
             (click)="onMenuClick(item)"
-          >
+            >
             {{ item.label }}
           </button>
-        </ng-template>
-      </ng-container>
+        }
+        <!-- Botão de AÇÃO (ex.: Sair) -->
+      }
     </div>
   </div>
 </mat-toolbar>

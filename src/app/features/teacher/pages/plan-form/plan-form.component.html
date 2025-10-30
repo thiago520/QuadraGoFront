@@ -16,115 +16,130 @@
         <mat-form-field appearance="fill" class="form-field">
           <mat-label>Ícone</mat-label>
           <mat-select formControlName="icon" placeholder="Selecione um ícone">
-            <mat-option *ngFor="let ic of icons" [value]="ic.value">
-              <mat-icon style="margin-right: 8px">{{ ic.value }}</mat-icon> {{ ic.label }}
-            </mat-option>
+            @for (ic of icons; track ic) {
+              <mat-option [value]="ic.value">
+                <mat-icon style="margin-right: 8px">{{ ic.value }}</mat-icon> {{ ic.label }}
+              </mat-option>
+            }
           </mat-select>
-          <mat-error *ngIf="form.get('icon')?.hasError('required')"
-            >Selecione um ícone</mat-error
-          >
-        </mat-form-field>
+          @if (form.get('icon')?.hasError('required')) {
+            <mat-error
+              >Selecione um ícone</mat-error
+              >
+            }
+          </mat-form-field>
 
-        <!-- Título -->
-        <mat-form-field appearance="fill" class="form-field">
-          <mat-label>Título</mat-label>
-          <input
-            matInput
-            formControlName="title"
-            placeholder="Ex: Plano Básico"
-          />
-          <mat-error *ngIf="form.get('title')?.hasError('required')"
-            >Informe o título</mat-error
-          >
-          <mat-error *ngIf="form.get('title')?.hasError('minlength')"
-            >Mínimo de 3 caracteres</mat-error
-          >
-        </mat-form-field>
-
-        <div class="row-2">
-          <!-- Valor (máscara BRL) -->
+          <!-- Título -->
           <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Valor</mat-label>
-            <span matPrefix>R$&nbsp;</span>
+            <mat-label>Título</mat-label>
             <input
               matInput
-              formControlName="price"
-              placeholder="0,00"
-              inputmode="numeric"
-              (input)="onPriceInput($event)"
-              (blur)="onPriceBlur()"
-            />
-            <mat-error *ngIf="form.get('price')?.hasError('required')"
-              >Informe o valor</mat-error
-            >
-          </mat-form-field>
-
-          <!-- Período -->
-          <mat-form-field appearance="fill" class="form-field">
-            <mat-label>Período</mat-label>
-            <mat-select formControlName="period">
-              <mat-option *ngFor="let p of periods" [value]="p">{{
-                p
-              }}</mat-option>
-            </mat-select>
-            <mat-error *ngIf="form.get('period')?.hasError('required')"
-              >Selecione o período</mat-error
-            >
-          </mat-form-field>
-        </div>
-
-        <!-- Características -->
-        <div class="features-header">
-          <h3>Características</h3>
-          <button type="button" mat-stroked-button (click)="addFeature()">
-            <mat-icon>add</mat-icon> Adicionar
-          </button>
-        </div>
-
-        <div class="features-list">
-          <div
-            class="feature-item"
-            *ngFor="let ctrl of featuresFA.controls; let i = index"
-          >
-            <mat-form-field appearance="fill" class="feature-field">
-              <input
-                matInput
-                [formControl]="ctrl"
-                placeholder="Ex: Até 50 alunos"
+              formControlName="title"
+              placeholder="Ex: Plano Básico"
               />
-            </mat-form-field>
+              @if (form.get('title')?.hasError('required')) {
+                <mat-error
+                  >Informe o título</mat-error
+                  >
+              }
+              @if (form.get('title')?.hasError('minlength')) {
+                <mat-error
+                  >Mínimo de 3 caracteres</mat-error
+                  >
+                }
+              </mat-form-field>
 
-            <button
-              type="button"
-              mat-icon-button
-              color="warn"
-              class="remove-btn"
-              (click)="removeFeature(i)"
-              [disabled]="featuresFA.length === 1"
-              aria-label="Remover característica"
-              title="Remover"
-            >
-              <mat-icon>close</mat-icon>
-            </button>
-          </div>
+              <div class="row-2">
+                <!-- Valor (máscara BRL) -->
+                <mat-form-field appearance="fill" class="form-field">
+                  <mat-label>Valor</mat-label>
+                  <span matPrefix>R$&nbsp;</span>
+                  <input
+                    matInput
+                    formControlName="price"
+                    placeholder="0,00"
+                    inputmode="numeric"
+                    (input)="onPriceInput($event)"
+                    (blur)="onPriceBlur()"
+                    />
+                    @if (form.get('price')?.hasError('required')) {
+                      <mat-error
+                        >Informe o valor</mat-error
+                        >
+                    }
+                  </mat-form-field>
 
-          <mat-error
-            *ngIf="
-              featuresFA.hasError('minOneFeature') &&
-              (featuresFA.dirty || featuresFA.touched)
-            "
-          >
-            Informe pelo menos uma característica.
-          </mat-error>
-        </div>
-      </form>
-    </mat-card>
-  </div>
-</mat-dialog-content>
+                  <!-- Período -->
+                  <mat-form-field appearance="fill" class="form-field">
+                    <mat-label>Período</mat-label>
+                    <mat-select formControlName="period">
+                      @for (p of periods; track p) {
+                        <mat-option [value]="p">{{
+                          p
+                        }}</mat-option>
+                      }
+                    </mat-select>
+                    @if (form.get('period')?.hasError('required')) {
+                      <mat-error
+                        >Selecione o período</mat-error
+                        >
+                      }
+                    </mat-form-field>
+                  </div>
 
-<mat-dialog-actions align="end" class="dialog-actions">
-  <button type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
-  <button type="submit" mat-flat-button color="primary" (click)="submit()">
-    {{ ctaLabel() }}
-  </button>
-</mat-dialog-actions>
+                  <!-- Características -->
+                  <div class="features-header">
+                    <h3>Características</h3>
+                    <button type="button" mat-stroked-button (click)="addFeature()">
+                      <mat-icon>add</mat-icon> Adicionar
+                    </button>
+                  </div>
+
+                  <div class="features-list">
+                    @for (ctrl of featuresFA.controls; track ctrl; let i = $index) {
+                      <div
+                        class="feature-item"
+                        >
+                        <mat-form-field appearance="fill" class="feature-field">
+                          <input
+                            matInput
+                            [formControl]="ctrl"
+                            placeholder="Ex: Até 50 alunos"
+                            />
+                          </mat-form-field>
+                          <button
+                            type="button"
+                            mat-icon-button
+                            color="warn"
+                            class="remove-btn"
+                            (click)="removeFeature(i)"
+                            [disabled]="featuresFA.length === 1"
+                            aria-label="Remover característica"
+                            title="Remover"
+                            >
+                            <mat-icon>close</mat-icon>
+                          </button>
+                        </div>
+                      }
+
+                      @if (
+                        featuresFA.hasError('minOneFeature') &&
+                        (featuresFA.dirty || featuresFA.touched)
+                        ) {
+                        <mat-error
+                          >
+                          Informe pelo menos uma característica.
+                        </mat-error>
+                      }
+                    </div>
+                  </form>
+                </mat-card>
+              </div>
+            </mat-dialog-content>
+
+            <mat-dialog-actions align="end" class="dialog-actions">
+              <button type="button" mat-stroked-button (click)="cancel()">Cancelar</button>
+              <button type="submit" mat-flat-button color="primary" (click)="submit()">
+                {{ ctaLabel() }}
+              </button>
+            </mat-dialog-actions>

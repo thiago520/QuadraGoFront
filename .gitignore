@@ -1,42 +1,91 @@
-# See https://docs.github.com/get-started/getting-started-with-git/ignoring-files for more about ignoring files.
+# --- Builds / Compilados
+dist/
+out-tsc/
+tmp/
+temp/
+.tmp/
+bazel-out/
+build/
 
-# Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+# --- Cache do Angular/Tools
+.angular/cache/
+.angular/cache/**
+.cache/
+.eslintcache
+.stylelintcache
 
-# Node
-/node_modules
-npm-debug.log
-yarn-error.log
+# --- Testes e relatórios
+coverage/
+test-results/
+reports/
+junit/
+playwright-report/
+playwright/.cache/
+.cypress-cache/
+cypress/videos/
+cypress/screenshots/
+cypress/downloads/
+.vitest/
+.vscode-test/
 
-# IDEs and editors
+# --- Node & Package Managers
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+.npm/
+npm-packages-offline-cache/
+
+# --- Env/secrets (mantenha apenas um .env.example versionado)
+.env
+.env*
+!.env.example
+*.local.env
+*.env.local
+
+# --- Angular environments locais (evita vazar configs locais)
+src/environments/*.local.ts
+
+# --- IDEs/editores
 .idea/
 .project
 .classpath
+.settings/
 .c9/
 *.launch
-.settings/
 *.sublime-workspace
 
-# Visual Studio Code
+# --- Visual Studio Code (permite só estes arquivos úteis)
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
 
-# Miscellaneous
-/.angular/cache
+# --- Misc
 .sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
+connect.lock
+libpeerconnection.log
 testem.log
-/typings
-
-# System files
+typings/
+.history/
 .DS_Store
 Thumbs.db
+
+# --- Storybook (se usar)
+.storybook-out/
+storybook-static/
+
+# --- Docker (se usar)
+.docker/
+docker-compose.override.yml
+
+# --- Internacionalização gerada (se usar build de extra locales)
+i18n/*.generated.*
+
+# --- Sentry/Source maps privados (se fizer upload)
+*.map
+!src/**/*.map  # (maps em src podem permanecer durante dev; remova esta exceção se não quiser)
+

@@ -8,51 +8,73 @@
 
   <!-- Cards superiores -->
   <div class="top-cards">
+    <!-- Alunos -->
     <mat-card class="top-card">
       <mat-card-header>
         <mat-card-title class="title-card-top">Alunos</mat-card-title>
       </mat-card-header>
+
       <mat-card-content class="card-content">
-        <p class="content-number">147</p>
-        <p class="content-text">Alunos inscritos</p>
+        @if (loadingOverview()) {
+          <div class="skeleton skeleton-number"></div>
+          <div class="skeleton skeleton-text"></div>
+        } @else {
+          <p class="content-number">{{ overview().students }}</p>
+          <p class="content-text">Alunos inscritos</p>
+        }
       </mat-card-content>
+
       <mat-icon class="top-icon icon-group">group</mat-icon>
     </mat-card>
 
+    <!-- Agenda -->
     <mat-card class="top-card">
       <mat-card-header>
         <mat-card-title class="title-card-top">Agenda</mat-card-title>
       </mat-card-header>
+
       <mat-card-content class="card-content">
-        <p class="content-number">12</p>
-        <p class="content-text">Aulas agendadas</p>
+        @if (loadingOverview()) {
+          <div class="skeleton skeleton-number"></div>
+          <div class="skeleton skeleton-text"></div>
+        } @else {
+          <p class="content-number">{{ overview().scheduledLessons }}</p>
+          <p class="content-text">Aulas agendadas</p>
+        }
       </mat-card-content>
+
       <mat-icon class="top-icon icon-calendar">calendar_today</mat-icon>
     </mat-card>
 
+    <!-- Assinaturas -->
     <mat-card class="top-card">
       <mat-card-header>
         <mat-card-title class="title-card-top">Assinaturas</mat-card-title>
       </mat-card-header>
+
       <mat-card-content class="card-content">
-        <p class="content-number">89</p>
-        <p class="content-text">Assinaturas ativas</p>
+        @if (loadingOverview()) {
+          <div class="skeleton skeleton-number"></div>
+          <div class="skeleton skeleton-text"></div>
+        } @else {
+          <p class="content-number">{{ overview().activeSubscriptions }}</p>
+          <p class="content-text">Assinaturas ativas</p>
+        }
       </mat-card-content>
+
       <mat-icon class="top-icon icon-emoji_events">emoji_events</mat-icon>
     </mat-card>
   </div>
 
   <!-- Cards inferiores -->
   <div class="bottom-cards">
-    <!-- Ações Rápidas (header igual ao de Atividades Recentes) -->
+    <!-- Ações Rápidas -->
     <mat-card class="bottom-card quick-card">
       <div class="quick-header">
         <mat-icon class="quick-icon">flash_on</mat-icon>
         <div>
           <h2 class="quick-title">Ações Rápidas</h2>
-          <p class="quick-subtitle">
-            Acesso rápido às principais funcionalidades
-          </p>
+          <p class="quick-subtitle">Acesso rápido às principais funcionalidades</p>
         </div>
       </div>
 
@@ -81,25 +103,59 @@
         </div>
       </div>
 
-      <div class="activity-list">
-        <div
-          class="activity-item"
-          *ngFor="let movement of lastMovements; let i = index"
-          [style.--dot]="movement?.color || null"
-          [attr.data-index]="i"
-        >
-          <span class="bullet" aria-hidden="true"></span>
-
-          <div class="activity-text">
-            <span class="name">{{ movement.name }}</span>
-            <span class="desc">{{ movement.activity }}</span>
-          </div>
-
-          <span class="time">
-            {{ movement.time }}{{ movement.timeUnit || "h" }} atrás
-          </span>
+      <!-- LOADING -->
+      @if (loadingActivities()) {
+        <div class="activity-list">
+          @for (sk of [0,1,2,3,4]; track sk) {
+            <div class="activity-item">
+              <span class="bullet skeleton-bullet" aria-hidden="true"></span>
+              <div class="activity-text w-full">
+                <div class="skeleton skeleton-line"></div>
+                <div class="skeleton skeleton-line short"></div>
+              </div>
+              <span class="skeleton skeleton-time"></span>
+            </div>
+          }
         </div>
-      </div>
+      }
+
+      <!-- ERRO -->
+      @if (!loadingActivities() && errorActivities()) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon error">error</mat-icon>
+          <p class="empty-title">Não foi possível carregar as atividades</p>
+          <p class="empty-subtitle">Tente novamente mais tarde.</p>
+        </div>
+      }
+
+      <!-- VAZIO -->
+      @if (!loadingActivities() && !errorActivities() && lastMovements().length === 0) {
+        <div class="empty-state">
+          <mat-icon class="empty-icon">hourglass_empty</mat-icon>
+          <p class="empty-title">Sem atividades recentes</p>
+          <p class="empty-subtitle">As movimentações aparecerão aqui assim que acontecerem.</p>
+        </div>
+      }
+
+      <!-- LISTA -->
+      @if (!loadingActivities() && !errorActivities() && lastMovements().length > 0) {
+        <div class="activity-list">
+          @for (movement of lastMovements(); track movement; let i = $index) {
+            <div class="activity-item"
+                 [style.--dot]="movement?.color || null"
+                 [attr.data-index]="i">
+              <span class="bullet" aria-hidden="true"></span>
+              <div class="activity-text">
+                <span class="name">{{ movement.name }}</span>
+                <span class="desc">{{ movement.activity }}</span>
+              </div>
+              <span class="time">
+                {{ movement.time }}{{ movement.timeUnit || 'h' }} atrás
+              </span>
+            </div>
+          }
+        </div>
+      }
     </mat-card>
   </div>
 </div>

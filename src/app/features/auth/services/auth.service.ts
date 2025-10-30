@@ -1,77 +1,73 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-
+import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
   Observable,
   catchError,
-  map,
   of,
   tap,
   throwError,
 } from 'rxjs';
 import { environment } from '../../../../environments/environment';
-import { TokenStorageService } from '../../../core/auth/token-storage.service';
 import {
   LoginRequest,
-  LoginResponse,
+  RefreshRequest,
   TokenPair,
-  UserSummary,
 } from '../../../core/models/auth.models';
+import { UserSummary } from '../../../core/models/user.models';
+import { TokenStorageService } from '../../../core/auth/token-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly base = `${environment.apiBaseUrl}`;
+  private readonly base = environment.apiBaseUrl; // já inclui /api se houver
   private readonly user$ = new BehaviorSubject<UserSummary | null>(null);
   private refreshing = false;
   private refreshQueue: Array<() => void> = [];
 
-  constructor(private http: HttpClient, private store: TokenStorageService) {}
+  constructor(private http: HttpClient, private store: TokenStorageService) {
+    // hidrata user no boot
+    const meta = this.store.getUserMeta();
+    if (meta.userId && meta.email) {
+      this.user$.next({
+        id: meta.userId,
+        email: meta.email,
+        roles: meta.roles || [],
+      });
+    }
+  }
 
-  get currentUser$(): Observable<UserSummary | null> {
+  get currentUser$() {
     return this.user$.asObservable();
   }
-  get snapshotUser(): UserSummary | null {
+  get snapshotUser() {
     return this.user$.value;
   }
 
   login(data: LoginRequest) {
-    return this.http.post<LoginResponse>(`${this.base}/auth/login`, data).pipe(
+    return this.http.post<TokenPair>(`${this.base}/auth/login`, data).pipe(
       tap((res) => {
-        this.store.setTokens(res.accessToken, res.refreshToken);
-        this.user$.next(res.user);
+        this.store.setTokens(res);
+        this.user$.next({ id: res.userId, email: res.email, roles: res.roles });
       })
     );
   }
 
-  loadMe() {
-    return this.http
-      .get<UserSummary>(`${this.base}/auth/me`)
-      .pipe(tap((u) => this.user$.next(u)));
-  }
-
-  logout() {
-    this.store.clear();
-    this.user$.next(null);
-  }
-
   refresh(): Observable<TokenPair> {
     if (this.refreshing) {
-      return new Observable<TokenPair>((observer) => {
-        this.refreshQueue.push(() => observer.complete());
+      return new Observable<TokenPair>((obs) => {
+        this.refreshQueue.push(() => obs.complete());
       });
     }
-
     const refreshToken = this.store.getRefreshToken();
     if (!refreshToken) return throwError(() => new Error('Sem refresh token'));
 
     this.refreshing = true;
     return this.http
-      .post<TokenPair>(`${this.base}/auth/refresh`, { refreshToken })
+      .post<TokenPair>(`${this.base}/auth/refresh`, {
+        refreshToken,
+      } satisfies RefreshRequest)
       .pipe(
-        tap((tokens) =>
-          this.store.setTokens(tokens.accessToken, tokens.refreshToken)
-        ),
+        tap((tokens) => this.store.setTokens(tokens)),
         tap(() => {
           this.refreshing = false;
           this.refreshQueue.splice(0).forEach((fn) => fn());
@@ -82,5 +78,18 @@ export class AuthService {
           return throwError(() => err);
         })
       );
+  }
+
+  logout(body?: { refreshToken?: string }) {
+    const hasAccess = !!this.store.getAccessToken();
+    const req$ = hasAccess
+      ? this.http.post<void>(`${this.base}/auth/logout`, body || {})
+      : of(void 0);
+    return req$.pipe(
+      tap(() => {
+        this.store.clear();
+        this.user$.next(null);
+      })
+    );
   }
 }

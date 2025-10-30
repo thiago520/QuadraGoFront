@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+
 import {
   Component,
   OnInit,
@@ -58,7 +58,6 @@ function atLeastOneNonEmptyFeature(): ValidatorFn {
   selector: 'app-plan-form',
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -68,8 +67,8 @@ function atLeastOneNonEmptyFeature(): ValidatorFn {
     MatIconModule,
     MatSnackBarModule,
     MatDialogActions,
-    MatDialogModule,
-  ],
+    MatDialogModule
+],
   templateUrl: './plan-form.component.html',
   styleUrls: ['./plan-form.component.scss'],
 })

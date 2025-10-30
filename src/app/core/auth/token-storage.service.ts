@@ -1,41 +1,38 @@
 import { Injectable } from '@angular/core';
 
 
-const KEY = 'qg_auth';
+const KEY = 'qg_auth_v2';
 
 
-export interface StoredTokens {
+export interface StoredAuth {
 accessToken: string | null;
 refreshToken: string | null;
+userId: number | null;
+email: string | null;
+roles: string[];
 }
 
 
 @Injectable({ providedIn: 'root' })
 export class TokenStorageService {
-get tokens(): StoredTokens {
-try {
-return JSON.parse(localStorage.getItem(KEY) || '{}');
-} catch {
-return { accessToken: null, refreshToken: null };
-}
+get value(): StoredAuth {
+try { return JSON.parse(localStorage.getItem(KEY) || '{}'); }
+catch { return { accessToken: null, refreshToken: null, userId: null, email: null, roles: [] }; }
 }
 
 
-set tokens(v: StoredTokens) {
-localStorage.setItem(KEY, JSON.stringify(v));
+set value(v: StoredAuth) { localStorage.setItem(KEY, JSON.stringify(v)); }
+
+
+setTokens(resp: { accessToken: string; refreshToken: string; userId: number; email: string; roles: string[]; }) {
+this.value = { accessToken: resp.accessToken, refreshToken: resp.refreshToken, userId: resp.userId, email: resp.email, roles: resp.roles };
 }
 
 
-setTokens(accessToken: string, refreshToken: string) {
-this.tokens = { accessToken, refreshToken };
-}
+clear() { localStorage.removeItem(KEY); }
 
 
-clear() {
-localStorage.removeItem(KEY);
-}
-
-
-getAccessToken(): string | null { return this.tokens.accessToken || null; }
-getRefreshToken(): string | null { return this.tokens.refreshToken || null; }
+getAccessToken() { return this.value.accessToken || null; }
+getRefreshToken() { return this.value.refreshToken || null; }
+getUserMeta() { const { userId, email, roles } = this.value; return { userId, email, roles }; }
 }

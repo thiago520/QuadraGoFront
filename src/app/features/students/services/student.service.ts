@@ -4,10 +4,10 @@ import { environment } from '../../../../environments/environment';
 import {
   CreateStudentDTO,
   UpdateStudentDTO,
-} from '../../../core/models/student.models';
+} from '../../../core/models/user.models';
 
 import { Observable } from 'rxjs';
-import { Student } from '../../../core/models/student.models';
+import { Student } from '../../../core/models/user.models';
 
 @Injectable({ providedIn: 'root' })
 export class StudentsService {

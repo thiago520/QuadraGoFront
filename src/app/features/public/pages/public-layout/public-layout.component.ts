@@ -4,17 +4,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-public-layout',
-  imports: [MatToolbarModule,
-    RouterOutlet,
-    MatIconModule,
-    MatButtonModule,
-    CommonModule,
-    RouterModule
-  ],
+  imports: [MatToolbarModule, RouterOutlet, MatIconModule, MatButtonModule, RouterModule],
   templateUrl: './public-layout.component.html',
   styleUrl: './public-layout.component.scss'
 })

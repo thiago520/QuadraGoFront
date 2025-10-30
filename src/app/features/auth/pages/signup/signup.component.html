@@ -1,4 +1,4 @@
-<div class="login-container">
+<div class="login-container" [formGroup]="form">
   <mat-toolbar color="primary" class="header-toolbar">
     <div class="brand-container">
       <span class="title">QuadraGo</span>
@@ -8,88 +8,151 @@
 
   <div class="login-card">
     <h2>Crie sua conta</h2>
-    <p class="welcome-text">Preencha os dados para começar a gerenciar sua quadra ou aulas</p>
+    <p class="welcome-text">
+      Preencha os dados para começar a gerenciar sua quadra ou aulas
+    </p>
 
-    <form class="login-form">
+    <form class="login-form" [formGroup]="form" (ngSubmit)="onSubmit()">
       <!-- Combobox para selecionar o tipo de cadastro -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Selecione o tipo de cadastro</mat-label>
-        <mat-select [(ngModel)]="selectedOption" name="selectedOption" required>
-          <mat-option *ngFor="let option of options" [value]="option.value">
+        <mat-select formControlName="selectedOption" required>
+          @for (option of options; track option) {
+          <mat-option [value]="option.value" [disabled]="option.disabled">
             {{ option.viewValue }}
           </mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
       <!-- Campos para Pessoa Física (Professores) -->
-      <ng-container *ngIf="isProfessor()">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Nome</mat-label>
-          <input matInput placeholder="Seu nome completo" [(ngModel)]="nome" name="nome" required>
-        </mat-form-field>
+      @if (isProfessor()) {
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome</mat-label>
+        <input
+          matInput
+          placeholder="Seu nome completo"
+          formControlName="nome"
+          required
+        />
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>CPF</mat-label>
-          <input matInput placeholder="000.000.000-00" [(ngModel)]="cpf" name="cpf" required>
-        </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>CPF</mat-label>
+        <input
+          matInput
+          placeholder="000.000.000-00"
+          formControlName="cpf"
+          required
+        />
+      </mat-form-field>
 
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Telefone</mat-label>
-          <input matInput placeholder="(00) 00000-0000" [(ngModel)]="telefone" name="telefone" required>
-        </mat-form-field>
-      </ng-container>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Telefone</mat-label>
+        <input
+          matInput
+          placeholder="(00) 00000-0000"
+          formControlName="telefone"
+          required
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput type="date" formControlName="birthDate" required />
+      </mat-form-field>
+      }
 
       <!-- Campos para Pessoa Jurídica (Quadras Esportivas) -->
-      <ng-container *ngIf="isQuadra()">
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Razão Social</mat-label>
-          <input matInput placeholder="Nome da empresa" [(ngModel)]="razaoSocial" name="razaoSocial" required>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>CNPJ</mat-label>
-          <input matInput placeholder="00.000.000/0000-00" [(ngModel)]="cnpj" name="cnpj" required>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Nome do Responsável</mat-label>
-          <input matInput placeholder="Nome do responsável" [(ngModel)]="nomeResponsavel" name="nomeResponsavel" required>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill" class="full-width">
-          <mat-label>Telefone Comercial</mat-label>
-          <input matInput placeholder="(00) 00000-0000" [(ngModel)]="telefoneComercial" name="telefoneComercial" required>
-        </mat-form-field>
-      </ng-container>
+      @if (isQuadra()) {
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Razão Social</mat-label>
+        <input
+          matInput
+          placeholder="Nome da empresa"
+          formControlName="razaoSocial"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>CNPJ</mat-label>
+        <input
+          matInput
+          placeholder="00.000.000/0000-00"
+          formControlName="cnpj"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Nome do Responsável</mat-label>
+        <input
+          matInput
+          placeholder="Nome do responsável"
+          formControlName="nomeResponsavel"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="full-width">
+        <mat-label>Telefone Comercial</mat-label>
+        <input
+          matInput
+          placeholder="(00) 00000-0000"
+          formControlName="telefoneComercial"
+          required
+        />
+      </mat-form-field>
+      }
 
       <!-- Campos comuns (Email e Senha) -->
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="seu@email.com" [(ngModel)]="email" name="email" required>
+        <input
+          matInput
+          type="email"
+          autocomplete="email"
+          placeholder="seu@email.com"
+          formControlName="email"
+          required
+        />
       </mat-form-field>
 
       <mat-form-field appearance="fill" class="full-width">
         <mat-label>Senha</mat-label>
-        <input matInput type="password" placeholder="Digite sua senha" [(ngModel)]="password" name="password" required>
+        <input
+          matInput
+          type="password"
+          autocomplete="new-password"
+          placeholder="Digite sua senha"
+          formControlName="password"
+          required
+        />
         <mat-icon matSuffix>visibility</mat-icon>
       </mat-form-field>
 
       <div class="options-row">
-        <mat-checkbox [(ngModel)]="rememberMe" name="rememberMe">Lembrar de mim</mat-checkbox>
+        <mat-checkbox formControlName="rememberMe">Lembrar de mim</mat-checkbox>
       </div>
 
-      <button mat-raised-button color="primary" class="full-width" [disabled]="!email || !password || (isProfessor() && (!nome || !cpf || !telefone)) || (isQuadra() && (!razaoSocial || !cnpj || !nomeResponsavel || !telefoneComercial))">
+      <button
+        mat-raised-button
+        color="primary"
+        class="full-width"
+        type="submit"
+        [disabled]="form.invalid || loading()"
+      >
         Criar Conta
       </button>
     </form>
 
-    <!-- Elementos movidos para fora do formulário -->
+    @if (error()) {
+    <p class="error">{{ error() }}</p>
+    }
+
     <p class="signup-link">
       Já tem uma conta? <a routerLink="/login">Faça login</a>
     </p>
 
-    <!-- Botão Voltar ao Início -->
-    <button mat-button routerLink="/" class="back-button">
+    <button mat-button routerLink="/" class="back-button" type="button">
       ← Voltar ao Início
     </button>
   </div>

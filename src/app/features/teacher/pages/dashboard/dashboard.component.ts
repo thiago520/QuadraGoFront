@@ -1,10 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 import { ACTIVITY_COLOR_MAP } from '../../../../utils/activity-color.map';
+import { DashboardOverview, DashboardService, RecentActivityDto} from '../../../../core/services/dashboard.service';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { catchError, finalize, map, of, tap } from 'rxjs';
 
 type TimeUnit = 'h' | 'd';
 
@@ -16,55 +18,80 @@ interface Movement {
   color?: string;
 }
 
+// Helpers de tempo
+function diffToTimeUnit(isoUtc: string): { time: number; unit: TimeUnit } {
+  const now = Date.now();
+  const at = Date.parse(isoUtc);
+  const ms = Math.max(0, now - at);
+  const hours = Math.floor(ms / (1000 * 60 * 60));
+  if (hours >= 24) return { time: Math.floor(hours / 24), unit: 'd' };
+  return { time: Math.max(0, hours), unit: 'h' };
+}
+
+function colorByActivity(activity: string): string {
+  const normalized = (activity || '').toLowerCase();
+  for (const keyword in ACTIVITY_COLOR_MAP) {
+    if (normalized.includes(keyword)) return ACTIVITY_COLOR_MAP[keyword];
+  }
+  return '#6b7280'; // cinza
+}
+
 @Component({
   selector: 'app-dashboard',
-  imports: [
-    MatCardModule,
-    MatIconModule,
-    MatButtonModule,
-    CommonModule,
-    RouterLink,
-  ],
+  standalone: true,
+  imports: [MatCardModule, MatIconModule, MatButtonModule, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss',
 })
 export class DashboardComponent implements OnInit {
-  lastMovements: Movement[] = [];
+  private api = inject(DashboardService);
 
-  ngOnInit(): void {
-    // Simulação de resposta da API (sem color)
-    const apiData: Omit<Movement, 'color'>[] = [
-      { name: 'Maria Silva', activity: 'Nova matrícula',      time: 2, timeUnit: 'h' },
-      { name: 'João Santos', activity: 'Aula cancelada',      time: 4, timeUnit: 'h' },
-      { name: 'Ana Costa',   activity: 'Pagamento realizado', time: 6, timeUnit: 'h' },
-      { name: 'Pedro Lima',  activity: 'Aula reagendada',     time: 1, timeUnit: 'd' },
-    ];
+  loadingOverview = signal(true);
+  loadingActivities = signal(true);
+  errorOverview = signal<string | null>(null);
+  errorActivities = signal<string | null>(null);
 
-    // Aplica cor automaticamente
-    this.lastMovements = apiData.map(m => ({
-      ...m,
-      color: this.getColorByActivity(m.activity),
-    }));
+  // overview
+  private overview$ = this.api.getOverview().pipe(
+    tap(() => this.errorOverview.set(null)),
+    catchError(() => {
+      this.errorOverview.set('Não foi possível carregar o resumo.');
+      return of<DashboardOverview>({ students: 0, scheduledLessons: 0, activeSubscriptions: 0 });
+    }),
+    finalize(() => this.loadingOverview.set(false))
+  );
+  overview = toSignal(this.overview$, {
+    initialValue: { students: 0, scheduledLessons: 0, activeSubscriptions: 0 },
+  });
 
-    // Ordena do menor tempo para o maior
-    this.lastMovements.sort((a, b) => this.totalHours(a) - this.totalHours(b));
-  }
+  // atividades
+  private activities$ = this.api.getRecentActivities(20).pipe(
+    tap(() => this.errorActivities.set(null)),
+    map((items: RecentActivityDto[]) =>
+      items
+        .map((i) => {
+          const t = diffToTimeUnit(i.happenedAt);
+          return {
+            name: i.name,
+            activity: i.activity,
+            time: t.time,
+            timeUnit: t.unit,
+            color: colorByActivity(i.activity),
+          } as Movement;
+        })
+        .sort((a, b) => {
+          const ah = a.timeUnit === 'd' ? a.time * 24 : a.time;
+          const bh = b.timeUnit === 'd' ? b.time * 24 : b.time;
+          return ah - bh;
+        })
+    ),
+    catchError(() => {
+      this.errorActivities.set('Não foi possível carregar as atividades.');
+      return of<Movement[]>([]);
+    }),
+    finalize(() => this.loadingActivities.set(false))
+  );
+  lastMovements = toSignal(this.activities$, { initialValue: [] as Movement[] });
 
-  /** Converte tempo para horas */
-  private totalHours(m: Movement): number {
-    return (m.timeUnit === 'd' ? m.time * 24 : m.time);
-  }
-
-  /** Busca a cor conforme palavras-chave (case-insensitive, parciais) */
-  private getColorByActivity(activity: string): string {
-    const normalized = activity.toLowerCase();
-
-    for (const keyword in ACTIVITY_COLOR_MAP) {
-      if (normalized.includes(keyword)) {
-        return ACTIVITY_COLOR_MAP[keyword];
-      }
-    }
-
-    return '#6b7280'; // fallback cinza
-  }
+  ngOnInit(): void {}
 }

@@ -8,43 +8,40 @@
   </header>
 
   <section class="cards-grid">
-    <ng-container *ngFor="let p of plans; trackBy: trackByPlan">
+    @for (p of plans; track trackByPlan($index, p)) {
       <!-- Placeholder vira "Criar novo plano" -->
-      <button
-        *ngIf="p.isPlaceholder; else planCard"
-        class="plan-card create-card"
-        (click)="openCreateDialog()"
-      >
-        <div class="create-icon">
-          <mat-icon>add</mat-icon>
-        </div>
-        <h3>Criar Novo Plano</h3>
-        <p>Personalize um plano específico para suas necessidades</p>
-      </button>
-
-      <!-- Card normal -->
-      <ng-template #planCard>
+      @if (p.isPlaceholder) {
+        <button
+          class="plan-card create-card"
+          (click)="openCreateDialog()"
+          >
+          <div class="create-icon">
+            <mat-icon>add</mat-icon>
+          </div>
+          <h3>Criar Novo Plano</h3>
+          <p>Personalize um plano específico para suas necessidades</p>
+        </button>
+      } @else {
         <mat-card class="plan-card" [class.emphasized]="p.emphasized">
-          <div class="badge" *ngIf="p.popular">Popular</div>
-
+          @if (p.popular) {
+            <div class="badge">Popular</div>
+          }
           <div class="icon-wrap">
             <mat-icon>{{ p.icon }}</mat-icon>
           </div>
-
           <h3 class="plan-name">{{ p.name }}</h3>
-
           <div class="price">
             <span class="currency">R$</span>
             <span class="amount">{{ p.price | number: '1.2-2' }}</span>
             <span class="period">/{{ periodSuffix(p.period) }}</span>
           </div>
-
           <ul class="features">
-            <li *ngFor="let f of p.features">
-              <mat-icon class="check">done</mat-icon> {{ f }}
-            </li>
+            @for (f of p.features; track f) {
+              <li>
+                <mat-icon class="check">done</mat-icon> {{ f }}
+              </li>
+            }
           </ul>
-
           <!-- Ações do card -->
           <div style="display:flex; gap:10px; margin-top:auto; justify-content:center;">
             <button mat-stroked-button class="choose-btn" (click)="openEditDialog(p)">
@@ -52,8 +49,9 @@
             </button>
           </div>
         </mat-card>
-      </ng-template>
-    </ng-container>
+      }
+      <!-- Card normal -->
+    }
   </section>
 
   <div class="sales-cta">
